@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* VitaNatura tokens. One accent (pine green), cool neutrals, soft 16px radius system:
+   cards 16px, inputs 12px, buttons full pill. */
+:root {
+  --bg: #f4f6f4;
+  --surface: #ffffff;
+  --surface-2: #eaefeb;
+  --line: #d9e1db;
+  --ink: #15201b;
+  --ink-2: #47554e;
+  --ink-3: #66746d;
+  --accent: #1d6b4f;
+  --accent-ink: #f3faf6;
+  --accent-soft: #dcefe5;
+  --warn: #9a5b00;
+  --warn-soft: #fbedd5;
+  --danger: #b3261e;
+  --danger-soft: #fbe3e1;
+  --shadow: 0 1px 2px rgb(21 50 37 / 0.06), 0 8px 24px rgb(21 50 37 / 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1311;
+    --surface: #141c19;
+    --surface-2: #1b2521;
+    --line: #29352f;
+    --ink: #e7eeea;
+    --ink-2: #b3c0b9;
+    --ink-3: #8d9a93;
+    --accent: #5cc49a;
+    --accent-ink: #062016;
+    --accent-soft: #173a2d;
+    --warn: #f0b75c;
+    --warn-soft: #3a2c12;
+    --danger: #ff8a80;
+    --danger-soft: #3d1a17;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --shadow-soft: var(--shadow);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Leaflet sits inside rounded cards */
+.leaflet-container {
+  font-family: inherit;
+  background: var(--surface-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
