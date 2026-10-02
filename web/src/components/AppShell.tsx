@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -28,9 +29,20 @@ export const nav = [
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-  const path = usePathname();
+  // Static export uses trailing slashes ("/help/"), nav hrefs do not.
+  const path = usePathname().replace(/(.)\/$/, "$1");
   const hydrated = useHydrated();
   const { profile, reset } = useVita();
+  const navRef = useRef<HTMLUListElement>(null);
+
+  // On phones the module menu is a sideways strip: keep the current page visible in it.
+  useEffect(() => {
+    const strip = navRef.current;
+    const active = strip?.querySelector<HTMLElement>("[aria-current=page]");
+    if (!strip || !active || strip.scrollWidth <= strip.clientWidth) return;
+    strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2 });
+  }, [path]);
+
   const filled = hydrated ? Object.values(profile).filter(Boolean).length : 0;
 
   return (
@@ -44,7 +56,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </Link>
 
         <nav aria-label="Modules" className="mt-4 lg:mt-8">
-          <ul className="flex gap-1 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible">
+          <ul
+            ref={navRef}
+            className="-mx-4 flex gap-1 overflow-x-auto px-4 pb-1 [mask-image:linear-gradient(to_right,black_85%,transparent)] lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:[mask-image:none]"
+          >
             {nav.map((n) => {
               const active = path === n.href;
               return (

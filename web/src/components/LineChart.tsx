@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 type Point = { x: number; y: number };
 
@@ -28,7 +28,16 @@ export function LineChart({
   xLabel?: (x: number) => string;
 }) {
   const [hover, setHover] = useState<number | null>(null);
-  const W = 600;
+  // Draw at the real pixel width so labels keep their size on phones.
+  const [W, setW] = useState(600);
+  const box = useCallback((el: HTMLDivElement | null) => {
+    if (!el) return;
+    const fit = (w: number) => setW(Math.max(280, Math.round(w)));
+    fit(el.clientWidth);
+    const ro = new ResizeObserver(([e]) => fit(e.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   const H = 200;
   const pad = { l: 36, r: 12, t: 12, b: 26 };
   const xs = data.map((d) => d.x);
@@ -42,18 +51,18 @@ export function LineChart({
   const activePoint = data.find((d) => d.x === active);
 
   return (
-    <div className="relative">
+    <div ref={box} className="relative">
       <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={label}>
         {ticks.map((t) => (
           <g key={t}>
             <line x1={pad.l} x2={W - pad.r} y1={sy(t)} y2={sy(t)} stroke="var(--line)" strokeWidth={1} />
-            <text x={pad.l - 8} y={sy(t) + 4} textAnchor="end" fontSize={11} fill="var(--ink-3)">
+            <text x={pad.l - 8} y={sy(t) + 4} textAnchor="end" fontSize={12} fill="var(--ink-3)">
               {Math.round(t)}
             </text>
           </g>
         ))}
         {data.map((d) => (
-          <text key={d.x} x={sx(d.x)} y={H - 6} textAnchor="middle" fontSize={11} fill="var(--ink-3)">
+          <text key={d.x} x={sx(d.x)} y={H - 6} textAnchor="middle" fontSize={12} fill="var(--ink-3)">
             {d.x}
           </text>
         ))}
@@ -68,7 +77,7 @@ export function LineChart({
               strokeDasharray="4 4"
               strokeWidth={1}
             />
-            <text x={W - pad.r} y={sy(reference.y) - 6} textAnchor="end" fontSize={11} fill="var(--ink-2)">
+            <text x={pad.l + 4} y={sy(reference.y) + 16} textAnchor="start" fontSize={12} fill="var(--ink-2)">
               {reference.label}
             </text>
           </g>
