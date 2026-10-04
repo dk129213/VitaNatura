@@ -1,4 +1,4 @@
-// Demo scenario for the hackathon pitch.
+// Demo scenario for the hackathon pitch, set in the Dubrovnik region.
 // Places marked `real` come from OpenStreetMap (see osm-facilities.json).
 // Anything marked `sample` is invented for the demo and must not be read as a live offer.
 
@@ -6,18 +6,22 @@ export const persona = {
   name: "Marta",
   initial: "M",
   age: 54,
-  role: "Biology professor from Zagreb",
-  photo: "/img/paklenica.jpg",
+  role: "Biology teacher from Vienna, on holiday in Dubrovnik",
 };
 
 export const incident = {
-  place: "Velika Paklenica canyon trail, Paklenica National Park",
-  lat: 44.3005,
-  lon: 15.4725,
-  date: "2 October 2026",
+  place: "Dubrovnik City Walls, near the Minčeta tower",
+  lat: 42.6421,
+  lon: 18.1083,
+  date: "4 October 2026",
 };
 
-// ---------- Module 6: help near the incident ----------
+// The Old Town is car-free: ambulances and taxis stop at Pile Gate.
+export const pileGate = { lat: 42.6416, lon: 18.1058 };
+export const apartment = { lat: 42.6556, lon: 18.07 };
+export const airport = { lat: 42.5614, lon: 18.2682 };
+
+// ---------- Module 6: help on the road ----------
 export const emergencyNumbers = [
   { number: "112", label: "All emergencies", note: "Works across the EU, free from any phone" },
   { number: "194", label: "Ambulance in Croatia", note: "Emergency medical service" },
@@ -28,90 +32,12 @@ export const healthPassport = {
   medication: ["Levothyroxine 75 mcg, every morning"],
   conditions: ["Hypothyroidism, well controlled"],
   bloodType: "A+",
-  contact: "Ivan (husband), shared with consent",
+  contact: "Thomas (husband), shared with consent",
 };
 
-// ---------- Module 2: accessible transport Zadar -> Zagreb ----------
-export type TransportOption = {
-  id: string;
-  title: string;
-  verdict: "recommended" | "possible" | "not-suitable";
-  duration: string;
-  priceNote: string;
-  summary: string;
-  checks: { ok: boolean; text: string }[];
-};
-
-export const transportOptions: TransportOption[] = [
-  {
-    id: "van",
-    title: "Adapted van with ramp, door to door",
-    verdict: "recommended",
-    duration: "about 3 h 15 min, 285 km via A1",
-    priceNote: "Sample partner price: 340 EUR",
-    summary:
-      "Leg stays elevated on a reclining seat, wheelchair rolls in on the ramp, no transfers on the way.",
-    checks: [
-      { ok: true, text: "Ramp and wheelchair restraint (verified partner)" },
-      { ok: true, text: "Reclining seat with leg rest" },
-      { ok: true, text: "Can leave the hospital tomorrow at 09:00" },
-      { ok: true, text: "Stops every 90 minutes for circulation" },
-    ],
-  },
-  {
-    id: "medical",
-    title: "Medical transport (ambulance vehicle)",
-    verdict: "possible",
-    duration: "about 3 h 30 min",
-    priceNote: "Covered only with a hospital referral",
-    summary:
-      "Possible if the treating doctor finds it medically necessary. The hospital arranges it, timing is less flexible.",
-    checks: [
-      { ok: true, text: "Stretcher or seated transport" },
-      { ok: false, text: "Needs a referral from the treating doctor" },
-      { ok: false, text: "Departure time set by the hospital" },
-    ],
-  },
-  {
-    id: "flight",
-    title: "Flight Zadar to Zagreb with assistance (WCHS)",
-    verdict: "possible",
-    duration: "45 min flight, about 4 h door to door",
-    priceNote: "Sample fare, schedule not live",
-    summary:
-      "EU Regulation 1107/2006 gives free assistance, guaranteed when requested at least 48 hours before the flight.",
-    checks: [
-      { ok: true, text: "WCHS: cannot manage aircraft steps, assistance to the seat" },
-      { ok: false, text: "48 h notice: earliest guaranteed assistance is 4 October" },
-      { ok: false, text: "Leg cannot stay elevated in an economy seat" },
-      { ok: false, text: "Two extra transfers (car to airport, airport to clinic)" },
-    ],
-  },
-  {
-    id: "bus",
-    title: "Intercity coach",
-    verdict: "not-suitable",
-    duration: "about 3 h 30 min",
-    priceNote: "Not offered for this profile",
-    summary:
-      "Assistance must be requested 36 hours ahead (EU Regulation 181/2011), and the leg cannot stay elevated.",
-    checks: [
-      { ok: false, text: "Steps at the door, boarding needs a lift the route may not have" },
-      { ok: false, text: "No space to keep the leg elevated" },
-    ],
-  },
-];
-
-export const routeSegments = [
-  { from: "Opća bolnica Zadar", to: "Van pick-up at the hospital entrance", mode: "Wheelchair, staff assisted", time: "08:45", risk: null },
-  { from: "Zadar", to: "A1 rest area in Lika", mode: "Adapted van", time: "09:00 - 10:35", risk: null },
-  { from: "Lika", to: "A1 rest area near Karlovac", mode: "Adapted van", time: "10:50 - 11:40", risk: "Accessible toilet reported by users, not yet verified" },
-  { from: "A1", to: "Step-free apartment, Martićeva ulica (sample)", mode: "Adapted van", time: "12:20", risk: null },
-];
-
-// ---------- Module 1: clinic and plan in Zagreb ----------
+// ---------- Module 1: where to have the surgery ----------
 export type ClinicMatch = {
-  osmId: string;
+  osmId?: string;
   name: string;
   address: string;
   match: number; // demo score
@@ -122,56 +48,135 @@ export type ClinicMatch = {
 
 export const clinicMatches: ClinicMatch[] = [
   {
-    osmId: "w171840875",
-    name: "Klinika za traumatologiju",
-    address: "Draškovićeva ulica 19, Zagreb",
-    match: 94,
+    osmId: "w428336702",
+    name: "Opća bolnica Dubrovnik",
+    address: "Ulica dr. Ante Šercera 2, Dubrovnik",
+    match: 93,
     kind: "public",
     reasons: [
-      "Dedicated trauma and orthopaedic surgery clinic",
-      "Emergency department, step-free entrance (OSM: wheelchair=yes)",
-      "About 400 m from the step-free apartment",
+      "Emergency department and orthopaedic surgery on site",
+      "EHIC covers necessary treatment on the same terms as for locals",
+      "About 1 km from the step-free apartment in Lapad",
     ],
   },
   {
-    osmId: "w78326996",
-    name: "Klinička bolnica Dubrava",
-    address: "Avenija Gojka Šuška 6, Zagreb",
-    match: 81,
+    name: "Klinika za traumatologiju, Zagreb",
+    address: "Draškovićeva ulica 19, Zagreb",
+    match: 71,
     kind: "public",
-    reasons: ["Emergency department", "Large orthopaedics and traumatology department"],
-    caution: "4.4 km from the apartment, longer trips for check-ups",
+    reasons: ["Dedicated trauma and orthopaedic surgery clinic"],
+    caution: "Needs a flight with an unstable fracture before surgery",
   },
   {
-    osmId: "w29273986",
-    name: "Klinička bolnica Sveti Duh",
-    address: "Sveti Duh 64, Zagreb",
-    match: 76,
+    name: "Surgery at home in Vienna",
+    address: "Marta's local hospital",
+    match: 58,
     kind: "public",
-    reasons: ["Emergency department", "Close to Marta's own home in Trešnjevka"],
-    caution: "OSM marks wheelchair access as limited",
-  },
-  {
-    osmId: "w1253297761",
-    name: "Akromion",
-    address: "Ulica Savezne Republike Njemačke 5, Zagreb",
-    match: 68,
-    kind: "private",
-    reasons: ["Private orthopaedic specialist practice", "Short waiting times"],
-    caution: "Private, self-paid unless covered by supplementary insurance",
+    reasons: ["Close to family and her own doctor"],
+    caution: "1,100 km trip before the fracture is fixed. The Dubrovnik team advises against it",
   },
 ];
 
 export const stayOption = {
-  title: "Step-free apartment, Martićeva ulica",
+  title: "Step-free apartment in Lapad",
   tag: "sample listing",
   reason:
-    "Marta's own flat is on the 3rd floor with no lift. For the first 3 weeks she needs a lift or ground floor, a walk-in shower and a quiet street.",
-  features: ["Ground floor, no steps", "Walk-in shower with seat", "About 400 m from the clinic", "Quiet courtyard side"],
+    "Marta's hotel is inside the Old Town: no cars, and steps on almost every street. For the next weeks she needs a ground floor, a walk-in shower and flat streets outside.",
+  features: ["Ground floor, no steps", "Walk-in shower with seat", "About 1 km from the hospital", "Next to the flat Lapad promenade"],
 };
 
+// ---------- Module 2: every move, step-free ----------
+export const arrangedMoves = [
+  {
+    date: "4 Oct",
+    title: "City walls to Pile Gate",
+    detail: "The Old Town is car-free. Walls staff bring a carry chair, the ambulance waits at Pile Gate.",
+  },
+  {
+    date: "8 Oct",
+    title: "Hospital to the apartment in Lapad",
+    detail: "Adapted taxi with a ramp, about 5 minutes. Wheelchair on loan from the hospital.",
+  },
+  {
+    date: "2 Nov",
+    title: "Lapad to Kalos, Vela Luka",
+    detail: "Adapted van over the Pelješac bridge and the car ferry to Korčula. The leg stays raised.",
+  },
+];
+
+export type TransportOption = {
+  id: "flight" | "car" | "bus" | "train";
+  title: string;
+  verdict: "recommended" | "possible" | "not-suitable";
+  duration: string;
+  priceNote: string;
+  summary: string;
+  checks: { ok: boolean; text: string }[];
+};
+
+export const transportOptions: TransportOption[] = [
+  {
+    id: "flight",
+    title: "Flight Dubrovnik to Vienna with assistance (WCHS)",
+    verdict: "recommended",
+    duration: "about 1 h 30 min flight, 4 h door to door",
+    priceNote: "Sample fare, schedule not live",
+    summary:
+      "EU Regulation 1107/2006 gives free assistance at both airports, guaranteed when requested at least 48 hours before the flight.",
+    checks: [
+      { ok: true, text: "Wheelchair from check-in to the seat, and at Vienna (WCHS)" },
+      { ok: true, text: "Medical form (MEDIF) drafted, signed by the surgeon" },
+      { ok: true, text: "Front-row seat with legroom requested" },
+      { ok: true, text: "Adapted taxi to the airport, about 25 minutes" },
+    ],
+  },
+  {
+    id: "car",
+    title: "Adapted car, door to door",
+    verdict: "possible",
+    duration: "about 11 h, 1,100 km, best split over two days",
+    priceNote: "Sample partner price on request",
+    summary: "No transfers, but a very long time sitting after surgery, with an overnight stop on the way.",
+    checks: [
+      { ok: true, text: "No changes between vehicles" },
+      { ok: false, text: "Long sitting raises the risk of blood clots after surgery" },
+      { ok: false, text: "Needs a step-free hotel for the overnight stop" },
+    ],
+  },
+  {
+    id: "bus",
+    title: "Intercity coach",
+    verdict: "not-suitable",
+    duration: "overnight, with changes",
+    priceNote: "Not offered for this profile",
+    summary:
+      "Assistance must be requested 36 hours ahead (EU Regulation 181/2011), and the leg cannot stay raised.",
+    checks: [
+      { ok: false, text: "Steps at the door, boarding needs a lift the route may not have" },
+      { ok: false, text: "No space to keep the leg raised" },
+    ],
+  },
+  {
+    id: "train",
+    title: "Train",
+    verdict: "not-suitable",
+    duration: "not available",
+    priceNote: "No railway in Dubrovnik",
+    summary: "Dubrovnik has no railway station, so any train journey starts with a long road transfer.",
+    checks: [{ ok: false, text: "No direct rail connection" }],
+  },
+];
+
+// Trip home on 17 November (sample times).
+export const routeSegments = [
+  { time: "08:30", to: "Adapted taxi from the apartment in Lapad", mode: "Ramp, wheelchair stays with her", risk: null },
+  { time: "09:00", to: "Dubrovnik Airport assistance desk", mode: "Wheelchair to the gate and up to the seat", risk: null },
+  { time: "10:40 - 12:15", to: "Flight to Vienna", mode: "Front-row seat, leg raised on a support", risk: "Front-row seat still waiting for the airline's confirmation" },
+  { time: "12:30", to: "Vienna Airport, met at the aircraft door", mode: "Assistance to arrivals, Thomas waits with the car", risk: null },
+];
+
 // ---------- Module 3: recovery after surgery ----------
-// Day 0 = surgery. Values are a scripted demo series.
+// Day 0 = surgery on 6 October. Values are a scripted demo series.
 export type RecoveryDay = {
   day: number;
   restingHr: number;
@@ -202,74 +207,83 @@ export const doctorSummaries: Record<number, string> = {
 
 export const recoveryPhases = [
   { fromDay: 1, title: "Rest and elevation", detail: "Seated exercises for the healthy leg and upper body, 3 times a day.", unlocked: true },
-  { fromDay: 3, title: "Short walks on crutches", detail: "Inside the apartment and courtyard, no weight on the right leg.", unlocked: true },
-  { fromDay: 14, title: "Thermal pool and hydrotherapy", detail: "After stitch removal and the surgeon's approval.", unlocked: false },
-  { fromDay: 42, title: "Flat nature trails", detail: "Boardwalks and paved forest paths, with partial weight bearing if approved.", unlocked: false },
+  { fromDay: 3, title: "Short walks on crutches", detail: "Inside the apartment and the garden, no weight on the right leg.", unlocked: true },
+  { fromDay: 14, title: "Seawater pool and hydrotherapy", detail: "After stitch removal and the surgeon's approval.", unlocked: false },
+  { fromDay: 21, title: "Lapad promenade", detail: "Flat seaside path, first in the wheelchair, then on crutches.", unlocked: false },
+  { fromDay: 42, title: "Nature trails", detail: "Flat island paths, with partial weight bearing if approved.", unlocked: false },
 ];
 
-// ---------- Module 4: wellness and nature ----------
+// ---------- Module 4: rehabilitation and nature ----------
 export const wellnessPlace = {
-  name: "Varaždinske Toplice",
-  lat: 46.2097,
-  lon: 16.4216,
-  image: "/img/varazdinske-toplice.jpg",
+  name: "Kalos, Vela Luka",
+  island: "Island of Korčula",
+  lat: 42.9682,
+  lon: 16.7129,
+  image: "/img/vela-luka.jpg",
   summary:
-    "A spa town with a long tradition of thermal-water rehabilitation, 80 km from Zagreb. Quiet from October to May.",
+    "A public special hospital for medical rehabilitation by the sea, known for seawater pools and medicinal mud. Quiet from October to May.",
 };
 
 export const wellnessProgram = [
   { day: "Day 1", items: ["Arrival by adapted van, check-in on the ground floor", "Physiotherapy assessment"] },
-  { day: "Day 2-5", items: ["Hydrotherapy in the thermal pool, 30 min", "Gait training with crutches", "Rest in the afternoon"] },
-  { day: "Day 6", items: ["Guided forest bathing walk on a paved path, 40 min", "Nutrition session: protein and vitamin D for bone healing"] },
-  { day: "Day 7-12", items: ["Partial weight-bearing exercises, as approved", "Thermal pool", "Optional: evening talk on Croatian protected areas"] },
-  { day: "Day 13-14", items: ["Before and after report: sleep, pain, step count", "Plan for home exercises"] },
+  { day: "Day 2-5", items: ["Seawater pool, 30 min", "Gait training with crutches", "Rest in the afternoon"] },
+  { day: "Day 6", items: ["Guided walk on the seafront path, 40 min", "Nutrition session: protein and vitamin D for bone healing"] },
+  { day: "Day 7-12", items: ["Partial weight-bearing exercises, as approved", "Mud treatment for the ankle", "Optional: evening talk on the island's protected areas"] },
+  { day: "Day 13-14", items: ["Before and after report: sleep, pain, step count", "Plan for home exercises in Vienna"] },
 ];
 
 export const trails = [
   {
-    name: "Kopački rit boardwalk",
-    park: "Kopački rit Nature Park",
-    image: "/img/kopacki-boardwalk.jpg",
-    surface: "Wooden boardwalk with railings",
-    length: "about 2 km loop",
+    name: "Lapad promenade",
+    park: "Dubrovnik",
+    image: "/img/lapad.jpg",
+    surface: "Paved, car-free seaside path",
+    length: "about 1.5 km",
     slope: "Flat",
-    fit: "From week 6 with the surgeon's approval",
-    crowd: "Quiet on weekday mornings in October",
+    fit: "From week 3, wheelchair first, then crutches",
+    crowd: "Quiet in the morning outside summer",
   },
   {
-    name: "Medvednica forest road",
-    park: "Medvednica Nature Park, Zagreb",
-    image: "/img/medvednica-forest.jpg",
-    surface: "Paved forest road",
-    length: "1.5 km out and back",
-    slope: "Gentle, up to 5 %",
-    fit: "From week 8, crutches or a walking frame",
-    crowd: "Busy on Sunday afternoons, quiet on weekdays",
+    name: "Lokrum botanical garden",
+    park: "Lokrum nature reserve",
+    image: "/img/lokrum.jpg",
+    surface: "Gravel and stone paths",
+    length: "1 km loop",
+    slope: "Mostly flat",
+    fit: "From week 6, boat from the Old Town harbour",
+    crowd: "Best on days without cruise ships in port",
   },
   {
-    name: "Učka forest path",
-    park: "Učka Nature Park",
-    image: "/img/ucka-forest.jpg",
-    surface: "Compacted gravel",
-    length: "3 km",
-    slope: "Moderate",
-    fit: "Later stage, full weight bearing",
-    crowd: "Quiet outside summer",
+    name: "Road along Veliko jezero",
+    park: "Mljet National Park",
+    image: "/img/mljet-lake-road.jpg",
+    surface: "Paved lakeside road",
+    length: "2 km out and back",
+    slope: "Flat",
+    fit: "From week 8, with the surgeon's approval",
+    crowd: "Almost empty in November",
   },
+];
+
+export const otherRehab = [
+  { name: "Thalassotherapia Opatija", image: "/img/thalasso-opatija.jpg", text: "Seaside rehabilitation hospital on the Kvarner coast" },
+  { name: "Istarske Toplice", image: "/img/spa.jpg", text: "Thermal spa in a green valley in Istria" },
+  { name: "Varaždinske Toplice", image: "/img/varazdinske-toplice.jpg", text: "Thermal-water rehabilitation north of Zagreb" },
 ];
 
 // ---------- Module 5: crowd-free experiences ----------
 export const harvestCalendar = [
-  { months: "Jan - Mar", what: "Pruning olives and vines, winter village stays, migrating birds", where: "Dalmatia, Istria, Kopački rit" },
-  { months: "Apr - Jun", what: "Blossom season, planting gardens, protected areas before the season", where: "Istria, Konavle, Učka" },
-  { months: "Jul - Aug", what: "Lavender, figs, mountains and islands off the main routes", where: "Hvar, Velebit, Lastovo" },
-  { months: "Sep - Oct", what: "Grape harvest, working in a winery", where: "Pelješac, Slavonia, Istria" },
-  { months: "Oct - Dec", what: "Olive and mandarin harvest, pressing at the oil mill", where: "Neretva valley, Dalmatia, Istria" },
+  { months: "Jan - Mar", what: "Pruning olives and vines, winter village stays, migrating birds", where: "Konavle, Pelješac, Neretva delta" },
+  { months: "Apr - Jun", what: "Blossom season, island walks before the season", where: "Konavle, Mljet, Elaphiti islands" },
+  { months: "Jul - Aug", what: "Figs and lavender on the islands, away from the main routes", where: "Korčula, Lastovo, Mljet" },
+  { months: "Sep - Oct", what: "Grape harvest and working in a winery", where: "Pelješac, Konavle" },
+  { months: "Oct - Dec", what: "Mandarin harvest, olive picking and pressing at the oil mill", where: "Neretva valley, Pelješac, Korčula" },
 ];
 
 export type FarmMatch = {
   name: string;
   region: string;
+  image: string;
   activity: string;
   effort: "low" | "medium" | "high";
   accessible: boolean;
@@ -282,17 +296,19 @@ export type FarmMatch = {
 export const farmMatches: FarmMatch[] = [
   {
     name: "OPG Matić, olive mill",
-    region: "Kaštela, Dalmatia",
+    region: "Ston, Pelješac",
+    image: "/img/olives.jpg",
     activity: "Watch the pressing, taste the new oil, lunch with the family",
     effort: "low",
     accessible: true,
     languages: "Croatian, English, German",
     when: "November, mill open daily",
-    note: "Step-free mill floor, seating throughout. Picking can be skipped.",
+    note: "Step-free mill floor, seating throughout. Picking is optional.",
   },
   {
     name: "OPG Bralić",
     region: "Pelješac",
+    image: "/img/grapes.jpg",
     activity: "Grape harvest morning and cellar tour",
     effort: "medium",
     accessible: false,
@@ -303,7 +319,8 @@ export const farmMatches: FarmMatch[] = [
   {
     name: "OPG Vukelić",
     region: "Neretva valley",
-    activity: "Mandarin picking and boat trip through the delta",
+    image: "/img/mandarins.jpg",
+    activity: "Mandarin picking and a boat trip through the delta",
     effort: "medium",
     accessible: false,
     languages: "Croatian, English, Italian",

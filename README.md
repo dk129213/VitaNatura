@@ -1,11 +1,13 @@
 # VitaNatura 365
 
-AI platform for health tourism and recovery in nature, built for the Tourism 365 hackathon.
-One user profile connects six modules: help on the road, accessible transport, clinic and stay,
-recovery monitoring, rehab in nature, and crowd-free trips.
+**You travel. We care.** Health in your pocket for every traveller in Croatia: help when something
+goes wrong on the trip, and planned treatment, recovery and spa stays. Built for the Tourism 365
+hackathon. One user profile connects six modules: help on the road, accessible transport, clinic and
+stay, recovery monitoring, rehab in nature, and crowd-free trips.
 
-The demo follows Marta, who breaks her ankle in Paklenica National Park, from emergency care in
-Zadar to surgery and recovery in Zagreb and rehabilitation in Varaždinske Toplice.
+The demo follows Marta, a visitor from Vienna who breaks her ankle on the Dubrovnik city walls:
+emergency care and surgery at Opća bolnica Dubrovnik, recovery in Lapad, rehabilitation by the sea at
+Kalos in Vela Luka, and a flight home with assistance.
 
 ## Run it
 

@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, XCircle, Bell, FileText, Van, AirplaneTilt, Ambulance, Bus } from "@phosphor-icons/react";
+import Image from "next/image";
+import { CheckCircle, XCircle, Bell, FileText, AirplaneTilt, Car, Bus, Train, Wheelchair } from "@phosphor-icons/react";
 import { PageHeader, NextStep, SampleNote } from "@/components/ui";
 import { MapView, type MapPoint } from "@/components/MapView";
-import { transportOptions, routeSegments } from "@/data/scenario";
+import { transportOptions, routeSegments, arrangedMoves, apartment, airport, pileGate } from "@/data/scenario";
 import { useVita, demoProfile } from "@/lib/store";
 import { useHydrated } from "@/lib/useHydrated";
 
-const icons = { van: Van, medical: Ambulance, flight: AirplaneTilt, bus: Bus };
+const icons = { flight: AirplaneTilt, car: Car, bus: Bus, train: Train };
 
 const verdictStyle = {
   recommended: "bg-accent text-accent-ink",
@@ -18,25 +19,23 @@ const verdictStyle = {
 const verdictLabel = { recommended: "Recommended", possible: "Possible, with limits", "not-suitable": "Not suitable" };
 
 const points: MapPoint[] = [
-  { id: "zd", lat: 44.10747, lon: 15.23468, title: "Opća bolnica Zadar", subtitle: "Pick-up, 08:45", kind: "hospital" },
-  { id: "r1", lat: 44.56, lon: 15.43, title: "A1 rest area in Lika", subtitle: "Accessible toilet", kind: "place" },
-  { id: "r2", lat: 45.43, lon: 15.49, title: "A1 rest area near Karlovac", subtitle: "Short stop", kind: "place" },
-  { id: "ap", lat: 45.8133, lon: 15.9877, title: "Step-free apartment", subtitle: "Martićeva ulica (sample)", kind: "you" },
+  { id: "pile", ...pileGate, title: "Pile Gate", subtitle: "Pick-up point for the Old Town", kind: "place" },
+  { id: "ap", ...apartment, title: "Step-free apartment", subtitle: "Lapad (sample)", kind: "you" },
+  { id: "dbv", ...airport, title: "Dubrovnik Airport", subtitle: "Assistance desk, 25 min by adapted taxi", kind: "place" },
 ];
 const line: [number, number][] = [
-  [44.10747, 15.23468],
-  [44.25, 15.55],
-  [44.56, 15.43],
-  [45.0, 15.33],
-  [45.43, 15.49],
-  [45.65, 15.75],
-  [45.8133, 15.9877],
+  [apartment.lat, apartment.lon],
+  [42.6475, 18.0905],
+  [42.6418, 18.1135],
+  [42.627, 18.145],
+  [42.6, 18.2],
+  [airport.lat, airport.lon],
 ];
 
 export default function TransportPage() {
   const hydrated = useHydrated();
   const { profile, transportChoice, setTransport } = useVita();
-  const [open, setOpen] = useState<string>("van");
+  const [open, setOpen] = useState<string>("flight");
   const p = hydrated && profile.mobilityCode ? profile : demoProfile;
   const chosen = hydrated ? transportChoice : undefined;
 
@@ -44,20 +43,31 @@ export default function TransportPage() {
     <div>
       <PageHeader
         module="Module 2, AccessRoute"
-        title="Zadar to Zagreb, every step checked"
-        intro="Vita checks each option against Marta's mobility profile and the carriers' rules, then shows what is fine and what still needs confirming."
+        title="Every move, checked for steps"
+        intro="Vita checks each transfer against Marta's mobility profile and the carriers' rules, then shows what is fine and what still needs confirming."
       />
+
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <figure>
+          <Image src="/img/plane.jpg" alt="Croatia Airlines aircraft on the apron" width={1920} height={1080} className="h-48 w-full rounded-2xl object-cover" />
+          <figcaption className="mt-2 text-sm text-ink-3">Flights: assistance booked under EU passenger rights</figcaption>
+        </figure>
+        <figure>
+          <Image src="/img/bus.jpg" alt="An intercity coach bound for Dubrovnik" width={1920} height={1280} className="h-48 w-full rounded-2xl object-cover" />
+          <figcaption className="mt-2 text-sm text-ink-3">Coaches, vans and taxis: checked for ramps and space</figcaption>
+        </figure>
+      </div>
 
       <section className="mt-8 rounded-2xl border border-line bg-surface p-6" aria-labelledby="mob-h">
         <h2 id="mob-h" className="font-semibold">
-          Mobility profile used for this search
+          Mobility profile used for every search
         </h2>
         <dl className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
           {[
             ["Code", p.mobilityCode],
             ["Weight bearing", p.weightBearing],
             ["Steps", p.stairs],
-            ["Needs", "Leg elevated, wheelchair on loan"],
+            ["Needs", "Leg raised, wheelchair on loan"],
           ].map(([k, v]) => (
             <div key={k}>
               <dt className="text-sm text-ink-3">{k}</dt>
@@ -67,13 +77,30 @@ export default function TransportPage() {
         </dl>
       </section>
 
-      <section className="mt-8" aria-labelledby="opt-h">
+      <section className="mt-8" aria-labelledby="moves-h">
+        <h2 id="moves-h" className="text-xl font-semibold">
+          Already arranged
+        </h2>
+        <ol className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+          {arrangedMoves.map((m) => (
+            <li key={m.title} className="rounded-2xl border border-line bg-surface p-5">
+              <p className="flex items-center gap-2 font-mono text-sm text-ink-3">
+                <Wheelchair size={18} className="text-accent" /> {m.date}
+              </p>
+              <p className="mt-2 font-medium">{m.title}</p>
+              <p className="mt-1 text-ink-2">{m.detail}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="mt-10" aria-labelledby="opt-h">
         <h2 id="opt-h" className="text-xl font-semibold">
-          Options compared
+          Getting home to Vienna, compared
         </h2>
         <ul className="mt-4 space-y-3">
           {transportOptions.map((o) => {
-            const Icon = icons[o.id as keyof typeof icons];
+            const Icon = icons[o.id];
             const isOpen = open === o.id;
             return (
               <li key={o.id} className={`rounded-2xl border bg-surface ${chosen === o.id ? "border-accent" : "border-line"}`}>
@@ -125,15 +152,15 @@ export default function TransportPage() {
           })}
         </ul>
         <SampleNote>
-          Prices and the partner are sample data. Assistance rules come from EU Regulations 1107/2006 (air) and 181/2011
-          (bus and coach).
+          Fares, times and partners are sample data. Assistance rules come from EU Regulations 1107/2006 (air) and
+          181/2011 (bus and coach).
         </SampleNote>
       </section>
 
       <section className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]" aria-labelledby="route-h">
         <div>
           <h2 id="route-h" className="text-xl font-semibold">
-            Door to door, 3 October
+            Door to door, 17 November
           </h2>
           <ol className="mt-4 space-y-3">
             {routeSegments.map((s) => (
@@ -148,8 +175,8 @@ export default function TransportPage() {
             ))}
           </ol>
         </div>
-        <div className="h-[380px] overflow-hidden rounded-2xl border border-line">
-          <MapView center={[45.0, 15.6]} zoom={7} points={points} line={line} />
+        <div className="h-[340px] overflow-hidden rounded-2xl border border-line">
+          <MapView center={[42.61, 18.16]} zoom={11} points={points} line={line} />
         </div>
       </section>
 
@@ -157,16 +184,16 @@ export default function TransportPage() {
         <div className="rounded-2xl border border-line bg-surface p-6">
           <div className="flex items-center gap-2">
             <FileText size={22} className="text-accent" />
-            <h2 className="font-semibold">Booking request, filled in for you</h2>
+            <h2 className="font-semibold">Assistance request, filled in for you</h2>
           </div>
           <dl className="mt-4 space-y-2 text-sm">
             {[
               ["Passenger", "Marta, 54"],
               ["Assistance code", p.mobilityCode],
-              ["Wheelchair", "Manual, folding, 14 kg (hospital loan)"],
-              ["Seating", "Reclining, right leg elevated"],
-              ["Medical note", "Splinted right ankle fracture, non-weight-bearing"],
-              ["Escort", "Husband, 1 seat"],
+              ["Wheelchair", "Manual, folding, 14 kg"],
+              ["Seating", "Front row, right leg raised"],
+              ["Medical note", "Right ankle fixed by surgery, non-weight-bearing"],
+              ["Escort", "Thomas (husband), 1 seat"],
             ].map(([k, v]) => (
               <div key={k} className="grid grid-cols-[140px_1fr] gap-2">
                 <dt className="text-ink-3">{k}</dt>
@@ -174,7 +201,7 @@ export default function TransportPage() {
               </div>
             ))}
           </dl>
-          <p className="mt-4 text-sm text-ink-2">Marta only reviews and confirms. For flights Vita also drafts the MEDIF form for the doctor to sign.</p>
+          <p className="mt-4 text-sm text-ink-2">Marta only reviews and confirms. Vita also drafts the MEDIF form for the surgeon to sign.</p>
         </div>
         <div className="rounded-2xl border border-line bg-surface p-6">
           <div className="flex items-center gap-2">
@@ -183,12 +210,12 @@ export default function TransportPage() {
           </div>
           <ul className="mt-4 space-y-3">
             <li>
-              <p className="font-medium">Today, 18:00</p>
-              <p className="text-ink-2">Ask the ward for a discharge letter and a wheelchair loan form.</p>
+              <p className="font-medium">15 November, 10:00</p>
+              <p className="text-ink-2">Last moment to request airport assistance with the 48-hour guarantee.</p>
             </li>
             <li>
-              <p className="font-medium">Tomorrow, 08:15</p>
-              <p className="text-ink-2">Driver confirms arrival. If not confirmed by 08:20, Vita calls the backup partner.</p>
+              <p className="font-medium">16 November</p>
+              <p className="text-ink-2">Surgeon signs the MEDIF form. If the airline has not confirmed by 18:00, Vita calls them.</p>
             </li>
             <li>
               <p className="font-medium">After the trip</p>
@@ -198,7 +225,7 @@ export default function TransportPage() {
         </div>
       </section>
 
-      <NextStep href="/clinic" label="See the clinic plan" hint="Arriving in Zagreb at 12:20. Next: where the surgery happens and where Marta stays." />
+      <NextStep href="/recovery" label="Follow the recovery" hint="Between the moves, Vita keeps watching the recovery so the hospital does not lose sight of Marta." />
     </div>
   );
 }

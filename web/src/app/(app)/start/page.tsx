@@ -14,7 +14,7 @@ const fields: { key: keyof Profile; label: string }[] = [
   { key: "location", label: "Where" },
   { key: "companion", label: "With" },
   { key: "injury", label: "Diagnosis from the hospital" },
-  { key: "destination", label: "Wants treatment in" },
+  { key: "destination", label: "Plan" },
   { key: "weightBearing", label: "Weight bearing" },
   { key: "stairs", label: "Steps" },
   { key: "mobilityCode", label: "Mobility code" },

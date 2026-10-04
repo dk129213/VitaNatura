@@ -2,11 +2,17 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Wheelchair, Translate, CalendarBlank, Leaf } from "@phosphor-icons/react";
+import { Wheelchair, Translate, CalendarBlank, Leaf, Boat } from "@phosphor-icons/react";
 import { PageHeader, SampleNote } from "@/components/ui";
 import { harvestCalendar, farmMatches } from "@/data/scenario";
 
 const effortLabel = { low: "Light", medium: "Moderate", high: "Demanding" };
+
+const harvests = [
+  { image: "/img/mandarins.jpg", alt: "Ripe mandarins on the tree", title: "Mandarins", where: "Neretva valley, October to December" },
+  { image: "/img/grapes.jpg", alt: "Freshly picked grapes poured from a crate", title: "Grapes", where: "Pelješac and Konavle, September and October" },
+  { image: "/img/olives.jpg", alt: "Picked olives on a net", title: "Olives", where: "Pelješac and Korčula, October and November" },
+];
 
 export default function ExplorePage() {
   const [onlyFit, setOnlyFit] = useState(true);
@@ -16,38 +22,45 @@ export default function ExplorePage() {
     <div>
       <PageHeader
         module="Module 5, crowd-free trips"
-        title="Croatia without the crowds, all year"
-        intro="For any traveller who prefers a family farm to a cruise-day old town. Vita matches farms by activity, effort, languages and access."
+        title="The Dubrovnik region without the crowds"
+        intro="For any traveller who prefers a family farm to the Old Town on a cruise day. Vita matches farms by activity, effort, languages and access."
       />
 
-      <section className="mt-8 overflow-hidden rounded-2xl border border-line bg-surface md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
-        <Image
-          src="/img/olive-tree.jpg"
-          alt="An old olive tree in Kaštela"
-          width={800}
-          height={1067}
-          className="h-64 w-full object-cover md:h-full"
-        />
-        <div className="p-6 md:p-8">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-xl font-semibold">Matched for Marta</h2>
-            <label className="inline-flex cursor-pointer items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={onlyFit}
-                onChange={(e) => setOnlyFit(e.target.checked)}
-                className="size-4 accent-[var(--accent)]"
-              />
-              Only what fits her recovery
-            </label>
-          </div>
-          <p className="mt-1 text-ink-2">
-            She asked for &quot;a quiet week with olives, nothing strenuous&quot;. For next autumn, Vita keeps to step-free places where picking is optional.
-          </p>
+      <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {harvests.map((h) => (
+          <li key={h.title}>
+            <Image src={h.image} alt={h.alt} width={1920} height={1280} className="h-48 w-full rounded-2xl object-cover" />
+            <p className="mt-3 font-medium">{h.title}</p>
+            <p className="text-sm text-ink-2">{h.where}</p>
+          </li>
+        ))}
+      </ul>
 
-          <ul className="mt-5 space-y-3">
-            {farms.map((f) => (
-              <li key={f.name} className="rounded-2xl border border-line p-5">
+      <section className="mt-10 rounded-2xl border border-line bg-surface p-6 md:p-8" aria-labelledby="match-h">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 id="match-h" className="text-xl font-semibold">
+            Matched for Marta
+          </h2>
+          <label className="inline-flex cursor-pointer items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={onlyFit}
+              onChange={(e) => setOnlyFit(e.target.checked)}
+              className="size-4 accent-[var(--accent)]"
+            />
+            Only what fits her recovery
+          </label>
+        </div>
+        <p className="mt-1 max-w-[65ch] text-ink-2">
+          She asked for &quot;a reason to come back, something quiet with olives&quot;. For next autumn, Vita keeps to
+          step-free places where picking is optional.
+        </p>
+
+        <ul className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {farms.map((f) => (
+            <li key={f.name} className="overflow-hidden rounded-2xl border border-line sm:grid sm:grid-cols-[160px_1fr]">
+              <Image src={f.image} alt="" width={640} height={480} className="h-40 w-full object-cover sm:h-full" />
+              <div className="p-5">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <p className="font-medium">{f.name}</p>
@@ -68,10 +81,23 @@ export default function ExplorePage() {
                   </li>
                 </ul>
                 <p className="mt-2 text-sm text-ink-3">{f.note}</p>
-              </li>
-            ))}
-          </ul>
-          <SampleNote>Farms are sample entries. Guests take part as a tourist experience, not as workers.</SampleNote>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <SampleNote>Farms are sample entries. Guests take part as a tourist experience, not as workers.</SampleNote>
+      </section>
+
+      <section className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        <Image src="/img/neretva.jpg" alt="Mandarin orchards and channels in the Neretva delta" width={1920} height={1280} className="h-56 w-full object-cover md:h-full" />
+        <div className="p-6 md:p-8">
+          <Boat size={26} className="text-accent" />
+          <h2 className="mt-3 text-xl font-semibold">Three cruise ships in port tomorrow?</h2>
+          <p className="mt-2 text-ink-2">
+            Vita sees the crowd forecast for the Old Town and suggests the Neretva delta, Ston or Lokrum instead, with
+            a plain reason: shorter queues, local food, and money that stays with local families.
+          </p>
+          <SampleNote>Example recommendation for the demo.</SampleNote>
         </div>
       </section>
 
@@ -82,7 +108,7 @@ export default function ExplorePage() {
         <p className="mt-1 text-ink-2">Real harvest dates move with the weather, so Vita confirms them with the farm a week ahead.</p>
         <ol className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {harvestCalendar.map((h) => {
-            const now = h.months === "Sep - Oct";
+            const now = h.months === "Oct - Dec";
             return (
               <li
                 key={h.months}
@@ -101,10 +127,10 @@ export default function ExplorePage() {
       </section>
 
       <section className="mt-10 rounded-2xl bg-surface-2 p-6">
-        <h2 className="text-lg font-semibold">Why this matters for Croatia</h2>
+        <h2 className="text-lg font-semibold">Why this matters for Dubrovnik</h2>
         <p className="mt-2 max-w-[70ch] text-ink-2">
-          Guests like Marta stay longer, travel outside July and August, and spend with local families instead of in
-          the busiest old towns. Each trip report shows the local spend and the crowds avoided.
+          Guests like Marta stay longer, travel outside July and August, and spend with local families instead of only
+          in the busiest streets. Each trip report shows the local spend and the crowds avoided.
         </p>
       </section>
     </div>

@@ -6,11 +6,11 @@ import { PageHeader, NextStep, SampleNote } from "@/components/ui";
 import { MapView, type MapPoint } from "@/components/MapView";
 import { ChatPanel } from "@/components/ChatPanel";
 import { triageScript } from "@/lib/scripts";
-import { emergencyNumbers, healthPassport, incident } from "@/data/scenario";
+import { emergencyNumbers, healthPassport, incident, pileGate } from "@/data/scenario";
 import { facilities, typeLabel, osmSource } from "@/lib/geo";
 
 const filters = [
-  { id: "care", label: "Hospitals and clinics", types: ["hospital", "clinic"] },
+  { id: "care", label: "Hospitals and clinics", types: ["hospital", "clinic", "doctors"] },
   { id: "pharmacy", label: "Pharmacies", types: ["pharmacy"] },
   { id: "dentist", label: "Dentists", types: ["dentist"] },
 ];
@@ -29,7 +29,9 @@ export default function HelpPage() {
   const nearby = useMemo(() => {
     const types = filters.find((f) => f.id === filter)!.types;
     return facilities
-      .filter((f) => f.region === "velebit" && types.includes(f.type))
+      .filter((f) => f.region === "dubrovnik" && types.includes(f.type))
+      // Of the doctors' practices, keep public outpatient clinics (ambulanta), not private individuals.
+      .filter((f) => f.type !== "doctors" || /ambulanta/i.test(f.name))
       .map((f) => ({ ...f, drive: (f as { driveMin?: number }).driveMin ?? 0 }))
       // Hospitals first: for anything serious they are where Marta needs to go.
       .sort((a, b) => Number(b.type === "hospital") - Number(a.type === "hospital") || a.drive - b.drive)
@@ -38,6 +40,7 @@ export default function HelpPage() {
 
   const points: MapPoint[] = [
     { id: "you", lat: incident.lat, lon: incident.lon, title: "Marta is here", subtitle: incident.place, kind: "you" },
+    { id: "pile", lat: pileGate.lat, lon: pileGate.lon, title: "Pile Gate", subtitle: "Ambulance and taxi pick-up, the Old Town is car-free", kind: "place" },
     ...nearby.map((f) => ({
       id: f.id,
       lat: f.lat,
@@ -77,7 +80,7 @@ export default function HelpPage() {
 
       <section className="mt-10" aria-labelledby="near-h">
         <h2 id="near-h" className="text-xl font-semibold">
-          Nearest help from the trail
+          Nearest help from the Old Town
         </h2>
         <div className="mt-3 flex flex-wrap gap-2" role="tablist" aria-label="Type of help">
           {filters.map((f) => (
@@ -97,7 +100,7 @@ export default function HelpPage() {
 
         <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
           <div className="h-[420px] overflow-hidden rounded-2xl border border-line">
-            <MapView center={[44.22, 15.36]} zoom={9} points={points} />
+            <MapView center={[42.648, 18.092]} zoom={14} points={points} />
           </div>
           <ul className="space-y-2">
             {nearby.map((f) => (
@@ -111,14 +114,17 @@ export default function HelpPage() {
                   {f.emergency && <span className="font-medium text-danger"> with emergency department</span>}
                   {f.hours && <span>, {f.hours}</span>}
                 </p>
-                {f.name === "Opća bolnica Zadar" && (
+                {f.name === "Opća bolnica Dubrovnik" && (
                   <p className="mt-2 text-sm text-ink-2">Nearest X-ray and emergency department for a suspected fracture.</p>
+                )}
+                {f.name.startsWith("Turistička ambulanta") && (
+                  <p className="mt-2 text-sm text-ink-2">Tourist clinic inside the Old Town, for problems that are not emergencies.</p>
                 )}
               </li>
             ))}
           </ul>
         </div>
-        <SampleNote>Places, opening hours and phone numbers: {osmSource}. Drive times from the trailhead: OSRM routing on OpenStreetMap roads.</SampleNote>
+        <SampleNote>Places, opening hours and phone numbers: {osmSource}. Drive times from Pile Gate: OSRM routing on OpenStreetMap roads.</SampleNote>
       </section>
 
       <div className="mt-10 grid grid-cols-1 gap-6 xl:grid-cols-2">
@@ -177,12 +183,12 @@ export default function HelpPage() {
             <h3 className="font-medium">Who pays?</h3>
             <ul className="mt-2 space-y-2 text-ink-2">
               <li>
-                <span className="text-ink">Marta</span> is insured with HZZO, the Croatian public health insurer, so
-                emergency care and surgery in public hospitals are covered, apart from possible co-payments.
+                <span className="text-ink">Marta and other EU visitors</span> use the European Health Insurance Card (EHIC).
+                Necessary care in public hospitals is covered on the same terms as for locals, including co-payments.
               </li>
               <li>
-                <span className="text-ink">Visitors from the EU</span> use the European Health Insurance Card (EHIC) for
-                necessary care in public hospitals, on the same terms as locals.
+                <span className="text-ink">Visitors from outside the EU</span> need travel insurance, unless their country has an
+                agreement with Croatia. Vita checks this from the passport country.
               </li>
               <li>
                 <span className="text-ink">Transport home, private clinics and rescue</span> usually need travel
@@ -194,9 +200,9 @@ export default function HelpPage() {
       </div>
 
       <NextStep
-        href="/transport"
-        label="Plan the trip to Zagreb"
-        hint="The ankle is splinted. Marta wants surgery in Zagreb, so the next step is getting there safely."
+        href="/clinic"
+        label="See the surgery plan"
+        hint="The ankle is splinted. Next: where the surgery happens and where Marta can stay without steps."
       />
     </div>
   );

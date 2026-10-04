@@ -26,21 +26,21 @@ export const intakeScript: Script = {
   start: {
     id: "start",
     bot: [
-      "Hi, I'm Vita. I organise care, transport and stays so you don't have to call around.",
-      "Tell me what happened, in your own words.",
+      "Hi, I'm Vita. You travel, we care: I organise help, transport and stays so you don't have to call around.",
+      "Tell me what happened, in any language.",
     ],
     replies: [
       {
-        label: "I slipped on a trail in Paklenica. My right ankle is swollen and I can't stand on it.",
+        label: "I slipped on the steps of the city walls in Dubrovnik. My right ankle is swollen and I can't stand on it.",
         next: "safety",
         patch: {
-          situation: "Slipped on a hiking trail, right ankle swollen, cannot stand on it",
-          location: "Paklenica National Park",
+          situation: "Slipped on the steps of the city walls, right ankle swollen, cannot stand on it",
+          location: "Dubrovnik Old Town",
         },
       },
     ],
     freeTextNext: "safety",
-    freeTextPatch: (t) => ({ situation: t, location: "Paklenica National Park" }),
+    freeTextPatch: (t) => ({ situation: t, location: "Dubrovnik Old Town" }),
   },
   safety: {
     id: "safety",
@@ -56,53 +56,46 @@ export const intakeScript: Script = {
   call112: {
     id: "call112",
     bot: [
-      "Please call 112 now. Tell them you are on the Velika Paklenica trail. I'm sharing your location in the call screen.",
-      "Keep the leg still and stay warm. I'll stay here and prepare everything for the hospital.",
+      "Please call 112 now. Tell them you are on the city walls near the Minčeta tower. I'm sharing your location in the call screen.",
+      "Keep the leg still. The ambulance will meet you at Pile Gate, because no cars can enter the Old Town.",
     ],
-    replies: [{ label: "OK, help is on the way", next: "later", patch: { companion: "Mountain rescue" } }],
+    replies: [{ label: "OK, help is on the way", next: "later", patch: { companion: "Husband, ambulance from Pile Gate" } }],
   },
   er: {
     id: "er",
     bot: [
       "Thanks. Not being able to stand on it means this needs an X-ray today, not a pharmacy.",
-      "The nearest emergency department with X-ray is Opća bolnica Zadar, about 55 minutes by car. Starigrad has an outpatient clinic for first aid, but no X-ray.",
-      "Can your husband drive you there?",
+      "The Old Town is car-free and full of steps, so I've asked the walls staff for a carry chair down to Pile Gate. From there Opća bolnica Dubrovnik is about 6 minutes by car.",
+      "Shall I order an ambulance or a taxi to Pile Gate?",
     ],
     replies: [
-      { label: "Yes, we have the car here", next: "later", patch: { companion: "Husband, with a car" } },
-      { label: "No, we came by bus", next: "taxi" },
+      { label: "A taxi is fine", next: "later", patch: { companion: "Husband, taxi from Pile Gate" } },
+      { label: "Ambulance, please", next: "later", patch: { companion: "Husband, ambulance from Pile Gate" } },
     ],
-  },
-  taxi: {
-    id: "taxi",
-    bot: [
-      "Then the safest option is 194, the ambulance service. If it's not urgent, I can book a taxi with a large rear seat from Starigrad, about 15 minutes away.",
-    ],
-    replies: [{ label: "Book the taxi", next: "later", patch: { companion: "Husband, taxi to hospital" } }],
   },
   later: {
     id: "later",
     bot: [
-      "I've sent your health passport to the emergency department in Croatian: penicillin allergy and your regular medication.",
-      "Let me know when you have news from the doctors.",
+      "Done. I've sent your health passport to the emergency department in Croatian: penicillin allergy and your regular medication.",
+      "Your European Health Insurance Card covers necessary care in public hospitals here, on the same terms as for locals.",
     ],
     replies: [
       {
-        label: "The X-ray shows a fractured ankle. They put on a splint and want surgery within a week. I'd like it done in Zagreb, where I live.",
-        next: "mobility",
+        label: "The X-ray shows a fractured ankle. They want to operate in the next few days. We live in Vienna. Can I have it done here?",
+        next: "decide",
         patch: {
-          injury: "Right ankle fracture, splinted at Opća bolnica Zadar. Surgery advised within a week",
-          destination: "Zagreb",
-          goal: "Surgery and recovery in Zagreb, then rehabilitation",
+          injury: "Right ankle fracture, splinted at Opća bolnica Dubrovnik. Surgery advised within days",
+          destination: "Surgery in Dubrovnik, then home to Vienna",
+          goal: "Surgery and recovery in Croatia, flight home when cleared",
         },
       },
     ],
   },
-  mobility: {
-    id: "mobility",
+  decide: {
+    id: "decide",
     bot: [
-      "Understood. I'll plan the trip to Zagreb and the clinic. Two questions about getting around.",
-      "Are you allowed to put any weight on the right leg?",
+      "Yes. Flying 1,100 km with an unstable fracture is not ideal, so the team suggests operating here. I'll compare the options and plan the recovery around it.",
+      "Two questions about getting around. Are you allowed to put any weight on the right leg?",
     ],
     replies: [
       { label: "No, none at all", next: "stairs", patch: { weightBearing: "None on the right leg" } },
@@ -111,7 +104,7 @@ export const intakeScript: Script = {
   },
   stairs: {
     id: "stairs",
-    bot: ["Can you manage steps, for example into a bus or up to a flat?"],
+    bot: ["Can you manage steps, for example into a bus or up to a hotel room?"],
     replies: [
       { label: "No", next: "health", patch: { stairs: "Cannot manage steps", mobilityCode: "WCHS" } },
       { label: "A few, slowly", next: "health", patch: { stairs: "A few steps with help", mobilityCode: "WCHR" } },
@@ -119,9 +112,7 @@ export const intakeScript: Script = {
   },
   health: {
     id: "health",
-    bot: [
-      "Last one. Any conditions, allergies or regular medication the clinic should know about?",
-    ],
+    bot: ["Last one. Any conditions, allergies or regular medication the doctors should know about?"],
     replies: [
       {
         label: "Hypothyroidism, I take levothyroxine. And I'm allergic to penicillin.",
@@ -138,8 +129,8 @@ export const intakeScript: Script = {
     id: "done",
     bot: [
       "Thank you, Marta. Your profile is ready, and every part of the trip will use it.",
-      "Your mobility code for airlines and rail is WCHS: you can walk a short distance with help, but not steps. I've also flagged that your own flat is on the 3rd floor with no lift.",
-      "Your plan has five steps: transport, clinic, recovery, rehabilitation and, later, something nice.",
+      "Your mobility code for airlines is WCHS: you can move a short distance with help, but not steps. Your hotel is inside the Old Town with steps everywhere, so I'm looking for a step-free place in Lapad.",
+      "Your plan covers the surgery, the moves, recovery, rehabilitation by the sea and the flight home.",
     ],
     replies: [],
     end: { label: "See my plan", href: "/journey" },
@@ -151,7 +142,7 @@ export const triageScript: Script = {
     id: "start",
     bot: ["Describe what you feel, in any language. I'll point you to the right kind of help."],
     replies: [
-      { label: "Twisted my ankle on the trail. Very swollen, I can't stand on it.", next: "q1" },
+      { label: "Twisted my ankle on the city walls. Very swollen, I can't stand on it.", next: "q1" },
       { label: "Bad sunburn and a headache", next: "pharmacy" },
       { label: "Chest pain and short of breath", next: "emergency", tone: "danger" },
     ],
@@ -169,7 +160,7 @@ export const triageScript: Script = {
     id: "er",
     bot: [
       "Recommended: emergency department today.",
-      "Not being able to bear weight after a fall is a common reason for an X-ray. Nearest with X-ray: Opća bolnica Zadar. Keep the ankle raised and cool on the way.",
+      "Not being able to bear weight after a fall is a common reason for an X-ray. Nearest: Opća bolnica Dubrovnik, about 6 minutes from Pile Gate. Keep the ankle raised and cool.",
       "This is guidance, not a diagnosis. If pain gets much worse or toes go numb, call 112.",
     ],
     replies: [],
@@ -177,8 +168,8 @@ export const triageScript: Script = {
   pharmacy: {
     id: "pharmacy",
     bot: [
-      "Recommended: pharmacy. A pharmacist can help with after-sun care and pain relief.",
-      "If you get a high fever, confusion or vomiting, go to an emergency department.",
+      "Recommended: pharmacy. There is one on Placa, inside the Old Town. A pharmacist can help with after-sun care and pain relief.",
+      "If you get a high fever, confusion or vomiting, go to the tourist clinic or an emergency department.",
     ],
     replies: [],
   },
@@ -206,14 +197,14 @@ export const checkinScript: Script = {
   flag: {
     id: "flag",
     bot: [
-      "I've marked today as yellow and sent a short summary to Dr. Horvat's team, with this morning's wound photo.",
+      "I've marked today as yellow and sent a short summary to Dr. Horvat's team at the hospital, with this morning's wound photo.",
       "They usually reply within 2 hours. If you get a fever above 38 °C or the redness spreads, call the clinic or 112.",
     ],
     replies: [],
   },
   better: {
     id: "better",
-    bot: ["Good progress. Your short walk in the courtyard is unlocked for today. Keep the leg raised afterwards."],
+    bot: ["Good progress. Your short walk in the garden is unlocked for today. Keep the leg raised afterwards."],
     replies: [],
   },
 };

@@ -145,7 +145,7 @@ export default function RecoveryPage() {
             <div className="flex items-center gap-2">
               <Stethoscope size={22} className="text-accent" />
               <h2 id="doc-h" className="font-semibold">
-                Summary for Dr. Horvat&apos;s team
+                Summary for Dr. Horvat&apos;s team in Dubrovnik
               </h2>
             </div>
             {summary ? (
@@ -193,7 +193,7 @@ export default function RecoveryPage() {
         </div>
       </div>
 
-      <NextStep href="/wellness" label="Plan the rehabilitation" hint="Once the surgeon approves, the next stage is rehabilitation in thermal water and in nature." />
+      <NextStep href="/wellness" label="Plan the rehabilitation" hint="Once the surgeon approves, the next stage is rehabilitation by the sea on the island of Korčula." />
     </div>
   );
 }

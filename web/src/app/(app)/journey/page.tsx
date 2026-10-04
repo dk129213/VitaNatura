@@ -11,48 +11,56 @@ type Status = "done" | "now" | "next";
 
 const steps: { date: string; title: string; detail: string; href: string; module: string; status: Status }[] = [
   {
-    date: "2 Oct",
-    title: "Fall on the trail, emergency care in Zadar",
-    detail: "Triage pointed to the emergency department. Health passport sent ahead in Croatian.",
+    date: "4 Oct",
+    title: "Fall on the city walls, emergency care in Dubrovnik",
+    detail: "Triage pointed to the emergency department. Carry chair to Pile Gate, health passport sent ahead in Croatian.",
     href: "/help",
     module: "Help on the road",
     status: "done",
   },
   {
-    date: "3 Oct",
-    title: "Adapted van from Zadar to Zagreb",
-    detail: "Door to door with the leg elevated. Arrives at a step-free apartment near the clinic.",
-    href: "/transport",
-    module: "Accessible transport",
+    date: "6 Oct",
+    title: "Surgery at Opća bolnica Dubrovnik",
+    detail: "Compared with Zagreb and Vienna, operating here was safest. Covered by her European Health Insurance Card.",
+    href: "/clinic",
+    module: "Clinic and stay",
     status: "now",
   },
   {
-    date: "5 Oct",
-    title: "Surgery at Klinika za traumatologiju",
-    detail: "Matched on specialty, emergency department and distance. Records translated and shared.",
-    href: "/clinic",
-    module: "Clinic and stay",
+    date: "8 Oct",
+    title: "Adapted taxi to a step-free apartment in Lapad",
+    detail: "Her Old Town hotel has steps everywhere. The new place is on the ground floor, by a flat seaside path.",
+    href: "/transport",
+    module: "Accessible transport",
     status: "next",
   },
   {
-    date: "5 Oct - 26 Oct",
-    title: "Recovery at home, monitored",
-    detail: "Smartwatch data, daily check-in and wound photos give the doctor one summary a day.",
+    date: "6 Oct - 1 Nov",
+    title: "Recovery in Lapad, monitored",
+    detail: "Smartwatch data, a daily check-in and wound photos give the hospital one summary a day.",
     href: "/recovery",
     module: "Recovery",
     status: "next",
   },
   {
-    date: "Mid November",
-    title: "14 days of rehabilitation in Varaždinske Toplice",
-    detail: "Thermal pool, physiotherapy and paved forest walks, unlocked step by step.",
+    date: "2 - 15 Nov",
+    title: "Rehabilitation by the sea at Kalos, Vela Luka",
+    detail: "Seawater pool, physiotherapy and flat island paths, unlocked step by step.",
     href: "/wellness",
     module: "Rehab and nature",
     status: "next",
   },
   {
+    date: "17 Nov",
+    title: "Flight home to Vienna with assistance",
+    detail: "Wheelchair at both airports, front-row seat, medical form signed by the surgeon.",
+    href: "/transport",
+    module: "Accessible transport",
+    status: "next",
+  },
+  {
     date: "Autumn 2027",
-    title: "A quiet week at an olive mill",
+    title: "Back for the olive harvest on Pelješac",
     detail: "A family farm matched to what Marta can do by then. Picking is optional, the mill is step-free.",
     href: "/explore",
     module: "Crowd-free trips",
@@ -70,10 +78,10 @@ export default function JourneyPage() {
     <div>
       <div className="relative overflow-hidden rounded-2xl">
         <Image
-          src="/img/paklenica.jpg"
-          alt="Limestone walls of the Velika Paklenica canyon"
+          src="/img/dubrovnik.jpg"
+          alt="Dubrovnik Old Town and its walls seen from above"
           width={1920}
-          height={1440}
+          height={1182}
           priority
           className="h-56 w-full object-cover md:h-64"
         />
@@ -81,7 +89,7 @@ export default function JourneyPage() {
         <div className="absolute bottom-0 p-6 text-[#f3faf6] md:p-8">
           <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Marta&apos;s plan</h1>
           <p className="mt-2 max-w-[60ch] text-[#d7e4dd]">
-            From a fall in Paklenica to walking in the forest again. One profile, six connected steps.
+            From a fall on the Dubrovnik city walls to walking by the sea again. One profile, every step connected.
           </p>
         </div>
       </div>

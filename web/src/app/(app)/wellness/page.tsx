@@ -4,38 +4,38 @@ import Image from "next/image";
 import { Path, Ruler, TrendUp, UsersThree, Wheelchair } from "@phosphor-icons/react";
 import { PageHeader, NextStep, SampleNote } from "@/components/ui";
 import { LiveConditions } from "@/components/LiveConditions";
-import { wellnessPlace, wellnessProgram, trails } from "@/data/scenario";
+import { wellnessPlace, wellnessProgram, trails, otherRehab } from "@/data/scenario";
 
 export default function WellnessPage() {
   return (
     <div>
       <PageHeader
         module="Module 4, wellness and nature"
-        title="Rehabilitation in thermal water and forest air"
-        intro="A 14-day programme built from real treatments, paved paths and quiet off-season dates. It adapts every day to sleep, pain and the weather."
+        title="Rehabilitation by the sea, off-season"
+        intro="A 14-day programme built from real treatments, flat paths and quiet November dates. It adapts every day to sleep, pain and the weather."
       />
 
       <section className="mt-8 overflow-hidden rounded-2xl border border-line bg-surface md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <Image
           src={wellnessPlace.image}
-          alt="The centre of Varaždinske Toplice"
-          width={1599}
-          height={801}
+          alt="The bay of Vela Luka on the island of Korčula"
+          width={1920}
+          height={1080}
           className="h-56 w-full object-cover md:h-full"
         />
         <div className="p-6 md:p-8">
-          <p className="text-sm text-ink-3">Mid November, 14 days</p>
+          <p className="text-sm text-ink-3">2 to 15 November, {wellnessPlace.island}</p>
           <h2 className="mt-1 text-2xl font-semibold tracking-tight">{wellnessPlace.name}</h2>
           <p className="mt-3 max-w-[55ch] text-ink-2">{wellnessPlace.summary}</p>
           <p className="mt-4 text-ink-2">
-            Chosen for Marta because: ground-floor room with a walk-in shower, physiotherapy on site, and paved paths
-            nearby for the first walks.
+            Chosen for Marta because: rehabilitation after orthopaedic surgery, seawater pools for exercise without
+            weight on the ankle, and 3 to 4 hours from Dubrovnik by adapted van, including the ferry.
           </p>
         </div>
       </section>
 
       <div className="mt-6">
-        <LiveConditions lat={wellnessPlace.lat} lon={wellnessPlace.lon} place={wellnessPlace.name} />
+        <LiveConditions lat={wellnessPlace.lat} lon={wellnessPlace.lon} place="Vela Luka" />
         <SampleNote>Vita uses these readings to move outdoor walks to the best part of the day, or indoors.</SampleNote>
       </div>
 
@@ -62,11 +62,11 @@ export default function WellnessPage() {
 
       <section className="mt-10" aria-labelledby="trail-h">
         <h2 id="trail-h" className="text-xl font-semibold">
-          Trails Marta can actually walk
+          Paths Marta can actually walk
         </h2>
         <p className="mt-1 max-w-[65ch] text-ink-2">
           Filtered by surface, slope and length from OpenStreetMap, plus ratings from other travellers with reduced
-          mobility. Busy times come from the crowd forecast for each park.
+          mobility. Busy times come from the crowd forecast, including cruise ship days in Dubrovnik.
         </p>
         <ul className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
           {trails.map((t, i) => (
@@ -103,7 +103,26 @@ export default function WellnessPage() {
         <SampleNote>Trail details and crowd notes are sample data for the demo.</SampleNote>
       </section>
 
-      <NextStep href="/explore" label="Something to look forward to" hint="Recovery goes better with a goal. Vita suggests a quiet trip for later." />
+      <section className="mt-10" aria-labelledby="more-h">
+        <h2 id="more-h" className="text-xl font-semibold">
+          Spas and health resorts across Croatia
+        </h2>
+        <p className="mt-1 max-w-[65ch] text-ink-2">
+          The same planner works for guests who come for a health stay on purpose, from thermal spas to seaside
+          rehabilitation.
+        </p>
+        <ul className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          {otherRehab.map((r) => (
+            <li key={r.name}>
+              <Image src={r.image} alt={r.name} width={1200} height={900} className={`h-44 w-full rounded-2xl object-cover ${r.image.endsWith("spa.jpg") ? "object-[center_88%]" : ""}`} />
+              <p className="mt-3 font-medium">{r.name}</p>
+              <p className="text-sm text-ink-2">{r.text}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <NextStep href="/explore" label="Something to look forward to" hint="Recovery goes better with a goal. Vita suggests a reason to come back next autumn." />
     </div>
   );
 }

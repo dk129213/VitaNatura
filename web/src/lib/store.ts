@@ -43,7 +43,7 @@ export const useVita = create<State>()(
       reset: () => set({ profile: {}, intakeDone: false, transportChoice: undefined, clinicChoice: undefined }),
     }),
     {
-      name: "vitanatura-demo",
+      name: "vitanatura-demo-v2",
       storage: createJSONStorage(() => {
         try {
           return localStorage;
@@ -63,16 +63,16 @@ export const useVita = create<State>()(
 
 // Profile filled in one go, used by "skip to the plan" in the demo.
 export const demoProfile: Profile = {
-  situation: "Slipped on a hiking trail, right ankle swollen, cannot stand on it",
-  location: "Paklenica National Park",
-  companion: "Husband, with a car",
-  injury: "Right ankle fracture, splinted at Opća bolnica Zadar. Surgery advised within a week",
+  situation: "Slipped on the steps of the city walls, right ankle swollen, cannot stand on it",
+  location: "Dubrovnik Old Town",
+  companion: "Husband, taxi from Pile Gate",
+  injury: "Right ankle fracture, splinted at Opća bolnica Dubrovnik. Surgery advised within days",
   weightBearing: "None on the right leg",
   stairs: "Cannot manage steps",
   mobilityCode: "WCHS",
   conditions: "Hypothyroidism",
   allergies: "Penicillin",
   medication: "Levothyroxine 75 mcg",
-  destination: "Zagreb",
-  goal: "Surgery and recovery in Zagreb, then rehabilitation",
+  destination: "Surgery in Dubrovnik, then home to Vienna",
+  goal: "Surgery and recovery in Croatia, flight home when cleared",
 };
