@@ -13,7 +13,7 @@ export const photoCredits = [
   c("lapad.jpg", "Lapad Beach at sunset, Dubrovnik", "Jules Verne Times Two", "CC BY 4.0", "Lapad_Beach_at_sunset,_Dubrovnik,_Croatia,_(PPL2-Enhanced)_julesvernex2.jpg"),
   c("bus.jpg", "Bus to Dubrovnik", "Hibasi", "CC BY-SA 4.0", "Bus_to_Dubrovnik.jpg"),
   c("plane.jpg", "Croatia Airlines 9A-CQF at Zagreb Airport", "07", "CC BY-SA 4.0", "Croatia_Airlines_9A-CQF_at_Zagreb_Airport.jpg"),
-  c("vela-luka.jpg", "Vela Luka, Island of Korčula", "Liilia Moroz", "CC BY-SA 4.0", "Vela_Luka_Island_of_Kor%C4%8Dula.jpg"),
+  c("vela-luka.jpg", "Vela Luka port bay", "Aradic-es", "Public domain", "Vela_luka_port960.JPG"),
   c("elaphiti.jpg", "Swimming area at Šunj Beach on Lopud island", "dronepicr", "CC BY 2.0", "Swimming_area_at_Sunj_Beach_on_Lopud_island,_Croatia_(48613058146).jpg"),
   c("lokrum.jpg", "Lokrum Island, botanical garden", "Pudelek (Marcin Szala)", "CC BY-SA 3.0", "Lokrum_Island_-_botanical_garden.JPG"),
   c("mljet-lake-road.jpg", "Road along the lake Veliko Jezero on Mljet", "dronepicr", "CC BY 2.0", "Road_along_the_lake_Veliko_Jezero_on_Mljet,_Croatia_(48739047462).jpg"),
