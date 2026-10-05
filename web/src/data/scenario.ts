@@ -275,7 +275,7 @@ export const otherRehab = [
 export const harvestCalendar = [
   { months: "Jan - Mar", what: "Pruning olives and vines, winter village stays, migrating birds", where: "Konavle, Pelješac, Neretva delta" },
   { months: "Apr - Jun", what: "Blossom season, island walks before the season", where: "Konavle, Mljet, Elaphiti islands" },
-  { months: "Jul - Aug", what: "Figs and lavender on the islands, away from the main routes", where: "Korčula, Lastovo, Mljet" },
+  { months: "Jun - Sep", what: "Sea clean-ups with Green Sea Safari, figs and lavender on the islands", where: "Elaphiti islands, Korčula, Mljet" },
   { months: "Sep - Oct", what: "Grape harvest and working in a winery", where: "Pelješac, Konavle" },
   { months: "Oct - Dec", what: "Mandarin harvest, olive picking and pressing at the oil mill", where: "Neretva valley, Pelješac, Korčula" },
 ];

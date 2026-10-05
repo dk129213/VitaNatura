@@ -66,7 +66,7 @@ const gallery = [
   { image: "/img/mandarins.jpg", caption: "Mandarin harvest" },
   { image: "/img/grapes.jpg", caption: "Grape harvest" },
   { image: "/img/olives.jpg", caption: "Olive picking" },
-  { image: "/img/lokrum.jpg", caption: "Quiet islands" },
+  { image: "/img/elaphiti.jpg", caption: "Sea clean-ups with Green Sea Safari" },
 ];
 
 const sources = [

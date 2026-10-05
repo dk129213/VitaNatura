@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Wheelchair, Translate, CalendarBlank, Leaf, Boat } from "@phosphor-icons/react";
+import { Wheelchair, Translate, CalendarBlank, Leaf, Boat, Recycle, CheckCircle, ArrowSquareOut } from "@phosphor-icons/react";
 import { PageHeader, SampleNote } from "@/components/ui";
 import { harvestCalendar, farmMatches } from "@/data/scenario";
 
@@ -86,6 +86,55 @@ export default function ExplorePage() {
           ))}
         </ul>
         <SampleNote>Farms are sample entries. Guests take part as a tourist experience, not as workers.</SampleNote>
+      </section>
+
+      <section
+        className="mt-10 overflow-hidden rounded-2xl border border-accent/40 bg-surface md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
+        aria-labelledby="gss-h"
+      >
+        <div className="p-6 md:order-first md:p-8">
+          <Recycle size={26} className="text-accent" />
+          <h2 id="gss-h" className="mt-3 text-xl font-semibold">
+            Give back to the sea with Green Sea Safari
+          </h2>
+          <p className="mt-2 max-w-[60ch] text-ink-2">
+            A Dubrovnik project that takes guests by boat to isolated beaches and bays of the Elaphiti islands to collect
+            plastic and other waste, with swimming and snorkelling on the way.
+          </p>
+          <ul className="mt-4 grid grid-cols-1 gap-2 2xl:grid-cols-2">
+            {[
+              "Trips and membership are free",
+              "Daily, 1 June to 30 September",
+              "09:30 from the Batala pontoon, about 4 hours",
+              "Gloves and aqua shoes provided",
+            ].map((t) => (
+              <li key={t} className="flex items-start gap-2">
+                <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0 text-accent" /> {t}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 flex items-start gap-2 text-ink-2">
+            <Wheelchair size={18} className="mt-0.5 shrink-0 text-warn" />
+            Needs swimming and stepping into a boat, so Vita suggests it to Thomas next summer, and to Marta once she
+            has fully recovered.
+          </p>
+          <a
+            href="https://greenseasafari.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-medium text-accent-ink transition active:scale-[0.98]"
+          >
+            Visit Green Sea Safari <ArrowSquareOut weight="bold" />
+          </a>
+          <SampleNote>Trip details from greenseasafari.com, October 2026. Photo: Lopud, one of the Elaphiti islands.</SampleNote>
+        </div>
+        <Image
+          src="/img/elaphiti.jpg"
+          alt="A clear bay on Lopud, one of the Elaphiti islands near Dubrovnik"
+          width={1920}
+          height={1279}
+          className="h-56 w-full object-cover md:h-full"
+        />
       </section>
 
       <section className="mt-10 overflow-hidden rounded-2xl border border-line bg-surface md:grid md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
