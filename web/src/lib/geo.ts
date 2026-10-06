@@ -14,10 +14,10 @@ export function km(aLat: number, aLon: number, bLat: number, bLon: number) {
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
-export const typeLabel: Record<string, string> = {
-  hospital: "Hospital",
-  clinic: "Clinic",
-  doctors: "Doctor",
-  pharmacy: "Pharmacy",
-  dentist: "Dentist",
+export const typeLabel: Record<string, { en: string; hr: string }> = {
+  hospital: { en: "Hospital", hr: "Bolnica" },
+  clinic: { en: "Clinic", hr: "Klinika" },
+  doctors: { en: "Doctor", hr: "Liječnik" },
+  pharmacy: { en: "Pharmacy", hr: "Ljekarna" },
+  dentist: { en: "Dentist", hr: "Stomatolog" },
 };

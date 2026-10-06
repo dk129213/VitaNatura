@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CloudSun, Wind, Plant, Warning } from "@phosphor-icons/react";
+import { useT } from "@/lib/i18n";
 
 type Data = {
   temp: number;
@@ -11,15 +12,31 @@ type Data = {
   pollen: number | null;
 };
 
-const weatherText = (c: number) =>
-  c === 0 ? "Clear" : c <= 3 ? "Partly cloudy" : c <= 48 ? "Fog" : c <= 67 ? "Rain" : c <= 77 ? "Snow" : c <= 82 ? "Showers" : "Storms";
+type T = (en: string, hr: string) => string;
 
-const aqiText = (v: number) => (v <= 20 ? "Good" : v <= 40 ? "Fair" : v <= 60 ? "Moderate" : "Poor");
+const weatherText = (c: number, t: T) =>
+  c === 0
+    ? t("Clear", "Vedro")
+    : c <= 3
+      ? t("Partly cloudy", "Djelomično oblačno")
+      : c <= 48
+        ? t("Fog", "Magla")
+        : c <= 67
+          ? t("Rain", "Kiša")
+          : c <= 77
+            ? t("Snow", "Snijeg")
+            : c <= 82
+              ? t("Showers", "Pljuskovi")
+              : t("Storms", "Grmljavina");
+
+const aqiText = (v: number, t: T) =>
+  v <= 20 ? t("Good", "Dobra") : v <= 40 ? t("Fair", "Prihvatljiva") : v <= 60 ? t("Moderate", "Umjerena") : t("Poor", "Loša");
 
 // Live data from Open-Meteo (free, no API key): weather and European air quality index.
 export function LiveConditions({ lat, lon, place }: { lat: number; lon: number; place: string }) {
   const [data, setData] = useState<Data | null>(null);
   const [error, setError] = useState(false);
+  const t = useT();
 
   useEffect(() => {
     const ctrl = new AbortController();
@@ -54,20 +71,36 @@ export function LiveConditions({ lat, lon, place }: { lat: number; lon: number; 
   if (error) {
     return (
       <p className="flex items-center gap-2 rounded-2xl border border-line bg-surface p-4 text-ink-2">
-        <Warning /> Live conditions are unavailable right now. The plan uses the last forecast.
+        <Warning /> {t("Live conditions are unavailable right now. The plan uses the last forecast.", "Podaci uživo trenutno nisu dostupni. Plan koristi zadnju prognozu.")}
       </p>
     );
   }
 
   const cells = [
-    { icon: CloudSun, label: "Weather", value: data ? `${Math.round(data.temp)} °C, ${weatherText(data.code)}` : null },
-    { icon: Wind, label: "Air quality", value: data ? (data.aqi == null ? "No reading" : `${aqiText(data.aqi)} (EAQI ${Math.round(data.aqi)})`) : null },
-    { icon: Plant, label: "Pollen", value: data ? (data.pollen == null ? "No reading" : data.pollen < 10 ? "Low" : data.pollen < 50 ? "Moderate" : "High") : null },
+    { icon: CloudSun, label: t("Weather", "Vrijeme"), value: data ? `${Math.round(data.temp)} °C, ${weatherText(data.code, t)}` : null },
+    {
+      icon: Wind,
+      label: t("Air quality", "Kvaliteta zraka"),
+      value: data ? (data.aqi == null ? t("No reading", "Nema mjerenja") : `${aqiText(data.aqi, t)} (EAQI ${Math.round(data.aqi)})`) : null,
+    },
+    {
+      icon: Plant,
+      label: t("Pollen", "Pelud"),
+      value: data
+        ? data.pollen == null
+          ? t("No reading", "Nema mjerenja")
+          : data.pollen < 10
+            ? t("Low", "Niska")
+            : data.pollen < 50
+              ? t("Moderate", "Umjerena")
+              : t("High", "Visoka")
+        : null,
+    },
   ];
 
   return (
     <div className="rounded-2xl border border-line bg-surface p-5">
-      <p className="text-sm text-ink-3">Live now in {place}, from Open-Meteo</p>
+      <p className="text-sm text-ink-3">{t(`Live now in ${place}, from Open-Meteo`, `Uživo sada: ${place}, izvor Open-Meteo`)}</p>
       <dl className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {cells.map((c) => (
           <div key={c.label} className="flex items-start gap-3">

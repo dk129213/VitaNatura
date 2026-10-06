@@ -1,13 +1,16 @@
 # VitaNatura 365
 
-**You travel. We care.** Health in your pocket for every traveller in Croatia: help when something
-goes wrong on the trip, and planned treatment, recovery and spa stays. Built for the Tourism 365
-hackathon. One user profile connects six modules: help on the road, accessible transport, clinic and
-stay, recovery monitoring, rehab in nature, and crowd-free trips.
+**Aktivni i zdravstveni turizam, 365 dana. Active and health tourism, all year.** A plan to adapt
+Dubrovnik-Neretva County for the months it stands empty: photo and canoe safaris in the Neretva delta,
+birdwatching, harvests, a salt room in Ston, a hotel pool open all winter, local traditions stretched
+into seasons, and one partner hotel as the base. Built for the Tourism 365 hackathon, for empty
+nesters. The site is in Croatian and English.
 
-The demo follows Marta, a visitor from Vienna who breaks her ankle on the Dubrovnik city walls:
-emergency care and surgery at Opća bolnica Dubrovnik, recovery in Lapad, rehabilitation by the sea at
-Kalos in Vela Luka, and a flight home with assistance.
+The demo follows Marta, an empty nester from Vienna on an active and health week, who falls on the
+Dubrovnik city walls: emergency care and surgery at Opća bolnica Dubrovnik, an adapted room in the
+partner hotel, rehabilitation at Kalos in Vela Luka, and a flight home with assistance.
+
+Concept and how it answers the brief: [`CONCEPT-365.md`](CONCEPT-365.md).
 
 ## Run it
 

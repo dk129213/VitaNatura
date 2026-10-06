@@ -6,7 +6,7 @@ export const persona = {
   name: "Marta",
   initial: "M",
   age: 54,
-  role: "Biology teacher from Vienna, on holiday in Dubrovnik",
+  role: "Biology teacher from Vienna. Her children have left home, so she and Thomas booked an active and health week in Dubrovnik",
 };
 
 export const incident = {
@@ -78,11 +78,11 @@ export const clinicMatches: ClinicMatch[] = [
 ];
 
 export const stayOption = {
-  title: "Step-free apartment in Lapad",
-  tag: "sample listing",
+  title: "Adapted ground-floor room in the partner hotel, Lapad",
+  tag: "sample partner",
   reason:
-    "Marta's hotel is inside the Old Town: no cars, and steps on almost every street. For the next weeks she needs a ground floor, a walk-in shower and flat streets outside.",
-  features: ["Ground floor, no steps", "Walk-in shower with seat", "About 1 km from the hospital", "Next to the flat Lapad promenade"],
+    "Marta and Thomas already stay at our partner hotel in Lapad, but their room is up a flight of steps. Under our contract the hotel keeps a few adapted rooms free, so they move downstairs and stay in the same place, with the same staff and the heated pool for later.",
+  features: ["Ground floor, step-free entrance", "Walk-in shower with seat", "About 1 km from the hospital", "Heated indoor pool, from week 3 with approval"],
 };
 
 // ---------- Module 2: every move, step-free ----------
@@ -94,7 +94,7 @@ export const arrangedMoves = [
   },
   {
     date: "8 Oct",
-    title: "Hospital to the apartment in Lapad",
+    title: "Hospital to the partner hotel in Lapad",
     detail: "Adapted taxi with a ramp, about 5 minutes. Wheelchair on loan from the hospital.",
   },
   {
@@ -169,7 +169,7 @@ export const transportOptions: TransportOption[] = [
 
 // Trip home on 17 November (sample times).
 export const routeSegments = [
-  { time: "08:30", to: "Adapted taxi from the apartment in Lapad", mode: "Ramp, wheelchair stays with her", risk: null },
+  { time: "08:30", to: "Adapted taxi from the partner hotel in Lapad", mode: "Ramp, wheelchair stays with her", risk: null },
   { time: "09:00", to: "Dubrovnik Airport assistance desk", mode: "Wheelchair to the gate and up to the seat", risk: null },
   { time: "10:40 - 12:15", to: "Flight to Vienna", mode: "Front-row seat, leg raised on a support", risk: "Front-row seat still waiting for the airline's confirmation" },
   { time: "12:30", to: "Vienna Airport, met at the aircraft door", mode: "Assistance to arrivals, Thomas waits with the car", risk: null },
@@ -207,8 +207,8 @@ export const doctorSummaries: Record<number, string> = {
 
 export const recoveryPhases = [
   { fromDay: 1, title: "Rest and elevation", detail: "Seated exercises for the healthy leg and upper body, 3 times a day.", unlocked: true },
-  { fromDay: 3, title: "Short walks on crutches", detail: "Inside the apartment and the garden, no weight on the right leg.", unlocked: true },
-  { fromDay: 14, title: "Seawater pool and hydrotherapy", detail: "After stitch removal and the surgeon's approval.", unlocked: false },
+  { fromDay: 3, title: "Short walks on crutches", detail: "Inside the hotel and its garden, no weight on the right leg.", unlocked: true },
+  { fromDay: 14, title: "Heated hotel pool and hydrotherapy", detail: "In the partner hotel, after stitch removal and the surgeon's approval.", unlocked: false },
   { fromDay: 21, title: "Lapad promenade", detail: "Flat seaside path, first in the wheelchair, then on crutches.", unlocked: false },
   { fromDay: 42, title: "Nature trails", detail: "Flat island paths, with partial weight bearing if approved.", unlocked: false },
 ];

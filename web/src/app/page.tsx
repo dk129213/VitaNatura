@@ -1,127 +1,125 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
   Tree,
-  FirstAid,
-  Wheelchair,
-  Hospital,
-  Heartbeat,
-  Basket,
+  Binoculars,
+  Drop,
   MapPin,
   CloudSun,
   Scales,
   CheckCircle,
-} from "@phosphor-icons/react/dist/ssr";
+  Hammer,
+  CalendarDots,
+  Buildings,
+  UsersThree,
+} from "@phosphor-icons/react";
 import { Reveal } from "@/components/Reveal";
+import { LangToggle } from "@/components/LangToggle";
 import { photoCredits } from "@/data/credits";
-
-const audiences = [
-  {
-    image: "/img/dubrovnik.jpg",
-    pos: "object-center",
-    alt: "Dubrovnik Old Town and its walls seen from above",
-    title: "When something goes wrong on the trip",
-    text: "A fall, a fever, a toothache. Vita finds help nearby, explains it in your language and rebuilds the rest of the trip.",
-    points: ["Nearest hospital, clinic or pharmacy", "112 and 194 in one tap", "Insurance and costs explained"],
-  },
-  {
-    image: "/img/spa.jpg",
-    pos: "object-[center_88%]",
-    alt: "A spa and wellness building with a ramp, below green cliffs",
-    title: "When the trip is for your health",
-    text: "Dental work, orthopaedics, rehabilitation or a spa programme, planned together with transport and a stay that fit.",
-    points: ["Clinic matched to your needs", "Step-free transport and rooms", "Recovery followed after you leave"],
-  },
-];
-
-const modules = [
-  {
-    icon: Wheelchair,
-    title: "Accessible transport",
-    text: "Flights, coaches and taxis checked for steps, with assistance booked ahead.",
-    href: "/transport",
-    image: "/img/plane.jpg",
-    span: "md:col-span-2 md:row-span-2",
-  },
-  { icon: FirstAid, title: "Help on the road", text: "Nearest care, 112 in one tap, and a health passport in Croatian.", href: "/help", span: "" },
-  { icon: Hospital, title: "Clinic and stay", text: "The right hospital and a step-free place to recover.", href: "/clinic", span: "" },
-  { icon: Heartbeat, title: "Recovery", text: "Watch data and daily check-ins become one summary for the doctor.", href: "/recovery", span: "md:col-span-2" },
-  {
-    icon: Tree,
-    title: "Rehab and nature",
-    text: "Seaside rehabilitation and quiet islands, October to May.",
-    href: "/wellness",
-    image: "/img/vela-luka.jpg",
-    span: "md:col-span-2",
-  },
-  { icon: Basket, title: "Crowd-free trips", text: "Mandarin, grape and olive harvests instead of packed streets.", href: "/explore", span: "md:col-span-2" },
-];
-
-const gallery = [
-  { image: "/img/bus.jpg", caption: "Coach transfers" },
-  { image: "/img/plane.jpg", caption: "Flights with assistance" },
-  { image: "/img/thalasso-opatija.jpg", caption: "Seaside health resorts" },
-  { image: "/img/spa.jpg", caption: "Thermal spas", pos: "object-[center_88%]" },
-  { image: "/img/mandarins.jpg", caption: "Mandarin harvest" },
-  { image: "/img/grapes.jpg", caption: "Grape harvest" },
-  { image: "/img/olives.jpg", caption: "Olive picking" },
-  { image: "/img/elaphiti.jpg", caption: "Sea clean-ups with Green Sea Safari" },
-];
-
-const sources = [
-  { icon: MapPin, name: "OpenStreetMap", use: "Hospitals, pharmacies and clinics on the map, with access tags" },
-  { icon: CloudSun, name: "Open-Meteo", use: "Live weather, air quality and pollen for each day's plan" },
-  { icon: Scales, name: "EU passenger rights", use: "Assistance rules for air (1107/2006) and coach travel (181/2011)" },
-];
+import { audience, calendar } from "@/data/destination";
+import { useT } from "@/lib/i18n";
 
 export default function Home() {
+  const t = useT();
+
+  const pillars = [
+    {
+      icon: Binoculars,
+      href: "/active",
+      image: "/img/neretva.jpg",
+      title: t("Active", "Aktivno"),
+      text: t(
+        "Photo safari and canoe safari in the Neretva delta, birdwatching in winter, harvests, the walk on the Ston walls.",
+        "Foto safari i kanu safari u delti Neretve, promatranje ptica zimi, berbe, šetnja Stonskim zidinama.",
+      ),
+    },
+    {
+      icon: Drop,
+      href: "/health",
+      image: "/img/lapad.jpg",
+      title: t("Health", "Zdravlje"),
+      text: t(
+        "Salt therapy in Ston, heated hotel pools in Dubrovnik, preventive check-ups and a smartwatch plan, with a safety net if something goes wrong.",
+        "Haloterapija u Stonu, grijani hotelski bazeni u Dubrovniku, preventivni pregledi i plan s pametnim satom, uz sigurnosnu mrežu ako nešto pođe po zlu.",
+      ),
+    },
+  ];
+
+  const changes = [
+    t("Photo hides at 3 viewpoints in the Neretva delta", "Skrovišta za fotografiranje na 3 vidikovca u delti Neretve"),
+    t("Canoe launch points with ramps, shared by local outfitters", "Mjesta za spuštanje kanua s rampama, zajednička za lokalne pružatelje"),
+    t("Marked birdwatching route with boards in four languages", "Označena staza za promatranje ptica s pločama na četiri jezika"),
+    t("A salt room next to the Ston salt pans", "Slana soba uz stonsku solanu"),
+    t("Benches and water on the Ston walls, open all winter", "Klupe i voda na Stonskim zidinama, otvorene cijelu zimu"),
+    t("Hotel pool heated and open October to May, with local passes", "Hotelski bazen grijan i otvoren od listopada do svibnja, s kartama za lokalne"),
+    t("Shade, seating and step-free paths at partner farms", "Hladovina, klupe i staze bez stepenica na partnerskim gospodarstvima"),
+    t("St. Blaise Week, oyster trail, Moreška in spring and autumn", "Tjedan sv. Vlaha, put kamenica, Moreška u proljeće i jesen"),
+    t("Certified local guides: boatmen and young people from the valley", "Certificirani lokalni vodiči: lađari i mladi iz doline"),
+  ];
+
+  const highlights = calendar.filter((c) => ["Feast of St. Blaise (Festa sv. Vlaha)", "Ston oyster trail", "Moreška and Kumpanija sword dances", "Mandarin harvest"].includes(c.title.en));
+
+  const sources = [
+    { icon: MapPin, name: "OpenStreetMap", use: t("Hospitals, pharmacies and clinics on the map", "Bolnice, ljekarne i ambulante na karti") },
+    { icon: CloudSun, name: "Open-Meteo", use: t("Live weather and air quality for each day's plan", "Vrijeme i kvaliteta zraka uživo za plan svakog dana") },
+    { icon: Scales, name: t("EU passenger rights", "Prava putnika u EU"), use: t("Assistance rules for air (1107/2006) and coach travel (181/2011)", "Pravila asistencije za zračni (1107/2006) i autobusni prijevoz (181/2011)") },
+  ];
+
   return (
     <div className="flex-1">
-      <header className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6">
+      <header className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-tight">
           <span className="grid size-8 place-items-center rounded-full bg-accent text-accent-ink">
             <Tree weight="fill" size={18} />
           </span>
           VitaNatura 365
         </Link>
-        <Link href="/journey" className="text-ink-2 hover:text-ink">
-          See Marta&apos;s plan
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/calendar" className="hidden text-ink-2 hover:text-ink sm:inline">
+            {t("Calendar 365", "Kalendar 365")}
+          </Link>
+          <LangToggle />
+        </div>
       </header>
 
       <section className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 pb-16 pt-8 sm:px-6 md:pt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
         <Reveal>
-          <p className="text-sm font-medium uppercase tracking-[0.14em] text-accent">Health in your pocket</p>
-          <h1 className="mt-3 text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
-            You travel.
-            <br />
-            We care.
+          <p className="text-sm font-medium uppercase tracking-[0.14em] text-accent">
+            {t("Active and health tourism, 365 days", "Aktivni i zdravstveni turizam, 365 dana")}
+          </p>
+          <h1 className="mt-3 text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
+            {t("The Dubrovnik region, active and healthy all year.", "Dubrovačko-neretvanski kraj, aktivan i zdrav cijele godine.")}
           </h1>
-          <p className="mt-5 max-w-[44ch] text-lg leading-relaxed text-ink-2">
-            For every traveller in Croatia: help when something goes wrong, and planned treatment, recovery and spa stays.
+          <p className="mt-5 max-w-[48ch] text-lg leading-relaxed text-ink-2">
+            {t(
+              "We adapt the destination itself for the months it stands empty: new places to watch birds and paddle, a salt room in Ston, a hotel pool open all winter, traditions stretched into seasons, and local people as the guides.",
+              "Prilagođavamo samu destinaciju za mjesece kad stoji prazna: nova mjesta za promatranje ptica i veslanje, slana soba u Stonu, hotelski bazen otvoren cijelu zimu, tradicije produžene u sezone i lokalni ljudi kao vodiči.",
+            )}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/start"
+              href="/calendar"
               className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-medium text-accent-ink transition active:scale-[0.98]"
             >
-              Start the demo <ArrowRight weight="bold" />
+              {t("See the year", "Pogledaj godinu")} <ArrowRight weight="bold" />
             </Link>
             <Link
               href="/journey"
               className="inline-flex items-center rounded-full border border-line bg-surface px-6 py-3 font-medium transition hover:bg-surface-2 active:scale-[0.98]"
             >
-              See Marta&apos;s plan
+              {t("Marta's story", "Martina priča")}
             </Link>
           </div>
         </Reveal>
         <Reveal delay={0.1}>
           <Image
-            src="/img/dubrovnik-walls.jpg"
-            alt="The walled Old Town of Dubrovnik and its harbour by the sea"
+            src="/img/neretva.jpg"
+            alt={t("Mandarin orchards and channels in the Neretva delta", "Nasadi mandarina i kanali u delti Neretve")}
             width={1920}
-            height={1235}
+            height={1280}
             priority
             className="aspect-[4/3] w-full rounded-2xl object-cover shadow-soft"
           />
@@ -129,69 +127,42 @@ export default function Home() {
       </section>
 
       <section className="border-y border-line bg-surface">
-        <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 md:py-20">
-          <h2 className="max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">For every tourist, not only patients.</h2>
-          <p className="mt-3 max-w-[60ch] text-lg text-ink-2">
-            Including travellers with reduced mobility, seniors, and the people who travel with them.
-          </p>
-          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
-            {audiences.map((a, i) => (
-              <Reveal key={a.title} delay={i * 0.08}>
-                <Image src={a.image} alt={a.alt} width={1600} height={1000} className={`aspect-[16/10] w-full rounded-2xl object-cover ${a.pos}`} />
-                <h3 className="mt-5 text-xl font-semibold">{a.title}</h3>
-                <p className="mt-2 max-w-[50ch] text-ink-2">{a.text}</p>
-                <ul className="mt-4 space-y-2">
-                  {a.points.map((p) => (
-                    <li key={p} className="flex items-center gap-2">
-                      <CheckCircle size={18} weight="fill" className="text-accent" /> {p}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            ))}
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 px-4 py-16 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:py-20">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+            {t("Full for three months, empty for six.", "Puno tri mjeseca, prazno šest.")}
+          </h2>
+          <div className="space-y-4 text-lg leading-relaxed text-ink-2">
+            <p>
+              {t(
+                "From June to September the Old Town is packed and cruise days are hard on everyone. From November to March many hotels close, seasonal staff leave, and the farms, boats and festivals of the county have no visitors.",
+                "Od lipnja do rujna Stari grad je prepun, a dani s kruzerima teški su svima. Od studenoga do ožujka mnogi hoteli se zatvaraju, sezonski radnici odlaze, a gospodarstva, lađe i fešte u županiji ostaju bez posjetitelja.",
+              )}
+            </p>
+            <p>
+              {t(
+                "Yet winter here is mild and sunny, birds arrive in the delta, mandarins and olives are picked, oysters are at their best and St. Blaise is celebrated. The reasons to come exist. The destination is just not set up for them.",
+                "A zima je ovdje blaga i sunčana, ptice dolaze u deltu, beru se mandarine i masline, kamenice su najbolje, slavi se sv. Vlaho. Razlozi za dolazak postoje. Destinacija im samo nije prilagođena.",
+              )}
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 px-4 py-16 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:py-20">
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Today, the traveller is their own travel agent.</h2>
-        <div className="space-y-4 text-lg leading-relaxed text-ink-2">
-          <p>
-            Hospital, transport, accommodation and recovery are arranged in dozens of places, often in a foreign
-            language. Travellers in a wheelchair can&apos;t tell whether the trip is possible at all.
-          </p>
-          <p>
-            Meanwhile hotels, spas and islands stand half empty from October to May, while the Old Town fills up on
-            cruise days. VitaNatura connects both sides.
-          </p>
-        </div>
-      </section>
-
-      <section className="mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 md:pb-24">
-        <h2 className="max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">Six modules, one profile.</h2>
-        <p className="mt-3 max-w-[60ch] text-lg text-ink-2">
-          What you say once in the chat is used everywhere: your mobility code books the airport assistance, your
-          recovery stage unlocks the paths.
-        </p>
-        <div className="mt-10 grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-4 md:grid-cols-4">
-          {modules.map((m, i) => (
-            <Reveal key={m.title} delay={i * 0.04} className={m.span}>
-              <Link
-                href={m.href}
-                className={`group relative flex h-full flex-col justify-end overflow-hidden rounded-2xl border border-line p-6 transition hover:shadow-soft ${
-                  m.image ? "text-[#f3faf6]" : i === 3 ? "bg-accent-soft" : "bg-surface"
-                }`}
-              >
-                {m.image && (
-                  <>
-                    <Image src={m.image} alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.02]" />
-                    <span className="absolute inset-0 bg-gradient-to-t from-[#0d1311]/85 via-[#0d1311]/40 to-transparent" />
-                  </>
-                )}
+      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 md:py-20">
+        <h2 className="max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">{t("Two pillars.", "Dva stupa.")}</h2>
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+          {pillars.map((p, i) => (
+            <Reveal key={p.href} delay={i * 0.08}>
+              <Link href={p.href} className="group relative flex h-full min-h-[340px] flex-col justify-end overflow-hidden rounded-2xl p-6 text-[#f3faf6] md:p-8">
+                <Image src={p.image} alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.02]" />
+                <span className="absolute inset-0 bg-gradient-to-t from-[#0d1311]/90 via-[#0d1311]/45 to-transparent" />
                 <span className="relative">
-                  <m.icon size={28} weight="duotone" className={m.image ? "" : "text-accent"} />
-                  <span className="mt-3 block text-xl font-semibold">{m.title}</span>
-                  <span className={`mt-1 block max-w-[40ch] ${m.image ? "text-[#d7e4dd]" : "text-ink-2"}`}>{m.text}</span>
+                  <p.icon size={30} weight="duotone" />
+                  <span className="mt-3 block text-2xl font-semibold">{p.title}</span>
+                  <span className="mt-2 block max-w-[46ch] text-[#d7e4dd]">{p.text}</span>
+                  <span className="mt-4 inline-flex items-center gap-1.5 font-medium">
+                    {t("See the offer", "Pogledaj ponudu")} <ArrowRight weight="bold" />
+                  </span>
                 </span>
               </Link>
             </Reveal>
@@ -199,44 +170,129 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-surface py-16 md:py-20" aria-labelledby="gallery-h">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
-          <h2 id="gallery-h" className="text-3xl font-semibold tracking-tight md:text-4xl">Everything around the trip</h2>
-          <p className="mt-3 max-w-[60ch] text-lg text-ink-2">
-            Getting there, getting better, and a reason to come back outside the summer.
-          </p>
+      <section className="border-y border-line bg-surface">
+        <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 md:py-20">
+          <div className="flex items-center gap-2 text-accent">
+            <Hammer size={24} />
+            <p className="text-sm font-medium uppercase tracking-[0.14em]">{t("Not marketing: changes on the ground", "Ne marketing: promjene na terenu")}</p>
+          </div>
+          <h2 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
+            {t("What actually changes in the destination", "Što se stvarno mijenja u destinaciji")}
+          </h2>
+          <ul className="mt-8 grid grid-cols-1 gap-x-10 gap-y-3 md:grid-cols-2 lg:grid-cols-3">
+            {changes.map((c) => (
+              <li key={c} className="flex items-start gap-2 text-lg">
+                <CheckCircle size={22} weight="fill" className="mt-1 shrink-0 text-accent" /> {c}
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="mx-auto mt-8 grid w-full max-w-7xl grid-cols-2 gap-x-4 gap-y-6 px-4 sm:px-6 md:grid-cols-4">
-          {gallery.map((g) => (
-            <li key={g.caption}>
-              <Image src={g.image} alt={g.caption} width={800} height={600} className={`aspect-[4/3] w-full rounded-2xl object-cover ${"pos" in g ? g.pos : ""}`} />
-              <p className="mt-3 font-medium">{g.caption}</p>
-            </li>
-          ))}
-        </ul>
+      </section>
+
+      <section className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 px-4 py-16 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:py-20">
+        <div>
+          <p className="text-sm font-medium uppercase tracking-[0.14em] text-accent">{t("Who it is for", "Za koga")}</p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">{t.b(audience.title)}</h2>
+        </div>
+        <div>
+          <p className="text-lg leading-relaxed text-ink-2">{t.b(audience.text)}</p>
+          <ul className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {audience.facts.map((f) => (
+              <li key={f.en} className="flex items-start gap-2">
+                <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0 text-accent" /> {t.b(f)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="border-y border-line bg-surface py-16 md:py-20" aria-labelledby="cal-h">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h2 id="cal-h" className="text-3xl font-semibold tracking-tight md:text-4xl">
+                {t("Traditions, stretched into seasons", "Tradicije produžene u sezone")}
+              </h2>
+              <p className="mt-3 max-w-[60ch] text-lg text-ink-2">
+                {t(
+                  "One-day festivals become weeks and months of reasons to visit.",
+                  "Fešte od jednog dana postaju tjedni i mjeseci razloga za dolazak.",
+                )}
+              </p>
+            </div>
+            <Link href="/calendar" className="inline-flex items-center gap-1.5 font-medium text-accent">
+              <CalendarDots size={20} /> {t("Full Calendar 365", "Cijeli Kalendar 365")} <ArrowRight />
+            </Link>
+          </div>
+          <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {highlights.map((c) => (
+              <li key={c.title.en} className="rounded-2xl border border-line bg-bg p-5">
+                <p className="font-mono text-sm text-ink-3">{t.b(c.months)}</p>
+                <p className="mt-2 font-medium">{t.b(c.title)}</p>
+                <p className="mt-2 text-sm text-ink-2">{t.b(c.stretched)}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-20">
+        <Link href="/hotel" className="group rounded-2xl border border-line bg-surface p-6 transition hover:shadow-soft md:p-8">
+          <Buildings size={28} className="text-accent" />
+          <h2 className="mt-3 text-2xl font-semibold">{t("One partner hotel to start", "Za početak jedan partnerski hotel")}</h2>
+          <p className="mt-2 text-ink-2">
+            {t(
+              "A contract with one hotel in Lapad: guaranteed rooms and a heated pool for our guests, a better margin for us, and a safe first step into the off-season for the hotel.",
+              "Ugovor s jednim hotelom u Lapadu: zajamčene sobe i grijani bazen za naše goste, veća zarada za nas i siguran prvi korak u rad izvan sezone za hotel.",
+            )}
+          </p>
+          <span className="mt-4 inline-flex items-center gap-1.5 font-medium text-accent">
+            {t("The deal", "Ugovor")} <ArrowRight className="transition group-hover:translate-x-0.5" />
+          </span>
+        </Link>
+        <Link href="/community" className="group rounded-2xl border border-line bg-surface p-6 transition hover:shadow-soft md:p-8">
+          <UsersThree size={28} className="text-accent" />
+          <h2 className="mt-3 text-2xl font-semibold">{t("Run by local people", "Vode ga lokalni ljudi")}</h2>
+          <p className="mt-2 text-ink-2">
+            {t(
+              "Boatmen become photo-safari guides, farms host harvests, physiotherapists work through the winter. Every partner on the itinerary is a stakeholder.",
+              "Lađari postaju vodiči foto safarija, gospodarstva ugošćuju berbe, fizioterapeuti rade i zimi. Svaki partner na itineraru je dionik.",
+            )}
+          </p>
+          <span className="mt-4 inline-flex items-center gap-1.5 font-medium text-accent">
+            {t("Jobs, partners, nature", "Poslovi, partneri, priroda")} <ArrowRight className="transition group-hover:translate-x-0.5" />
+          </span>
+        </Link>
       </section>
 
       <section className="relative overflow-hidden">
-        <Image src="/img/lapad.jpg" alt="" fill sizes="100vw" className="object-cover" />
+        <Image src="/img/dubrovnik-walls.jpg" alt="" fill sizes="100vw" className="object-cover" />
         <div className="absolute inset-0 bg-[#0d1311]/65" />
         <div className="relative mx-auto w-full max-w-7xl px-4 py-20 text-[#f3faf6] sm:px-6 md:py-28">
-          <h2 className="max-w-3xl text-3xl font-semibold tracking-tight md:text-5xl">
-            Follow Marta: from a fall on the Dubrovnik city walls back to the sea.
+          <p className="text-sm font-medium uppercase tracking-[0.14em] text-[#b8e6cf]">{t("You travel. We care.", "Vi putujete, mi brinemo.")}</p>
+          <h2 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight md:text-5xl">
+            {t(
+              "Marta's active week, and what happens when she falls on the city walls.",
+              "Martin aktivni tjedan i što se dogodi kad padne na gradskim zidinama.",
+            )}
           </h2>
-          <p className="mt-4 max-w-[55ch] text-lg text-[#d7e4dd]">
-            The demo walks through one case with real hospitals, real routes and live conditions.
+          <p className="mt-4 max-w-[58ch] text-lg text-[#d7e4dd]">
+            {t(
+              "Marta, 54, and Thomas are empty nesters from Vienna. The demo follows her from the Neretva photo safari to the hospital, an adapted room in the partner hotel, rehab by the sea, and back next March for Ston.",
+              "Marta (54) i Thomas iz Beča, djeca su im otišla od kuće. Demo je prati od foto safarija na Neretvi do bolnice, prilagođene sobe u partnerskom hotelu, rehabilitacije uz more i povratka idućeg ožujka zbog Stona.",
+            )}
           </p>
           <Link
             href="/start"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#f3faf6] px-6 py-3 font-medium text-[#15201b] transition active:scale-[0.98]"
           >
-            Start the demo <ArrowRight weight="bold" />
+            {t("Start the demo", "Pokreni demo")} <ArrowRight weight="bold" />
           </Link>
         </div>
       </section>
 
       <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 md:py-24">
-        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">Built on open data</h2>
+        <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{t("Built on open data", "Izgrađeno na otvorenim podacima")}</h2>
         <ul className="mt-8 grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-3">
           {sources.map((s) => (
             <li key={s.name} className="flex gap-4">
@@ -249,15 +305,17 @@ export default function Home() {
           ))}
         </ul>
         <p className="mt-10 max-w-[70ch] text-ink-3">
-          VitaNatura supports decisions by travellers and doctors. It never diagnoses, and every recommendation shows its
-          reason and source. Health data stays on the device unless the user agrees to share it.
+          {t(
+            "Health features support guests and doctors; they never diagnose. Health data stays on the device unless the guest agrees to share it. Partners, prices and the hotel are sample data.",
+            "Zdravstvene funkcije pomažu gostima i liječnicima, nikad ne postavljaju dijagnozu. Zdravstveni podaci ostaju na uređaju, osim ako gost pristane podijeliti ih. Partneri, cijene i hotel su primjeri.",
+          )}
         </p>
       </section>
 
       <footer className="border-t border-line">
         <div className="mx-auto w-full max-w-7xl px-4 py-10 text-sm text-ink-3 sm:px-6">
-          <p className="font-medium text-ink-2">VitaNatura 365, Tourism 365 hackathon demo</p>
-          <p className="mt-3">Photos from Wikimedia Commons:</p>
+          <p className="font-medium text-ink-2">{t("VitaNatura 365, Tourism 365 hackathon demo", "VitaNatura 365, demo za hackathon Turizam 365")}</p>
+          <p className="mt-3">{t("Photos from Wikimedia Commons:", "Fotografije s Wikimedia Commonsa:")}</p>
           <ul className="mt-1 grid grid-cols-1 gap-x-8 gap-y-1 md:grid-cols-2">
             {photoCredits.map((c) => (
               <li key={c.file}>
@@ -268,7 +326,12 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <p className="mt-3">Map data and places: OpenStreetMap contributors, ODbL. Weather: Open-Meteo, CC BY 4.0.</p>
+          <p className="mt-3">
+            {t(
+              "Map data and places: OpenStreetMap contributors, ODbL. Weather: Open-Meteo, CC BY 4.0.",
+              "Podaci karte i mjesta: OpenStreetMap contributors, ODbL. Vrijeme: Open-Meteo, CC BY 4.0.",
+            )}
+          </p>
         </div>
       </footer>
     </div>

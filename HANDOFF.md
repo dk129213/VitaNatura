@@ -1,7 +1,11 @@
 # VitaNatura 365: handoff
 
 Everything you need to pick this project up on any computer, alone or with Claude.
-Last updated: 5 October 2026.
+Last updated: 6 October 2026.
+
+> **6 Oct: new direction.** The theme is now *year-round tourism*: active and health tourism in
+> Dubrovnik-Neretva County for empty nesters, with one partner hotel as the base. See `CONCEPT-365.md`
+> (Croatian) for the concept and how it answers the hackathon brief. The site is now bilingual (HR/EN).
 
 ## 1. What this is
 
@@ -20,6 +24,16 @@ One user profile connects six modules:
 | 5 | Crowd-free trips (`/explore`) | Mandarin, grape and olive harvests, family farms, Green Sea Safari, cruise-day tip |
 
 Plus `/start` (profile chat that builds the profile) and `/journey` (Marta's whole plan as a timeline).
+
+New "Destination 365" pages (what changes on the ground, the main part of the pitch now):
+
+| Page | What it shows |
+|---|---|
+| `/calendar` | Calendar 365: St. Blaise, Ston oysters, Moreška, harvests, lađa, Konavle folklore, stretched into seasons |
+| `/active` | Photo safari, canoe safari, birdwatching, harvests, Ston walls, lađa rowing, sample 7-day week |
+| `/health` | Salt room in Ston, heated hotel pool, check-ups, smartwatch plan, safety net (links to Marta) |
+| `/hotel` | The partner hotel contract and its phases |
+| `/community` | Empty nesters, local jobs, stakeholders, ecology, the brief point by point |
 
 **Demo story:** Marta, 54, a teacher from Vienna, slips on the Dubrovnik city walls on 4 October.
 Carry chair to Pile Gate, Opća bolnica Dubrovnik, surgery on 6 October (EHIC), step-free apartment in
@@ -65,10 +79,14 @@ VitaNatura/
       ├─ app/page.tsx                landing page
       ├─ app/(app)/<module>/page.tsx one folder per module page
       ├─ components/                 AppShell (sidebar), ChatPanel, MapView, LineChart, LiveConditions
-      ├─ data/scenario.ts            ALL demo story data: change the story here
+      ├─ data/scenario.ts            Marta's story data in English
+      ├─ data/scenario.hr.ts         the same in Croatian (same shape, checked at build time)
+      ├─ data/destination.ts         Destination 365 content, both languages in one file
+      ├─ lib/i18n.ts                 HR/EN switch: useT() gives t("English", "Hrvatski")
       ├─ data/osm-facilities.json    real places from OpenStreetMap
       ├─ data/credits.ts             photo credits (required by the licences)
-      └─ lib/scripts.ts              the scripted chat conversations
+      ├─ lib/scripts.ts              the scripted chat conversations (English)
+      └─ lib/scripts.hr.ts           the same in Croatian
 ```
 
 **Most edits happen in two files:** `web/src/data/scenario.ts` (story, prices, farms, trails) and
@@ -97,7 +115,7 @@ node scripts/fetch-facilities.mjs
 
 ## 6. Decisions so far (and why)
 
-- **English UI only** for now. Croatian later.
+- **Croatian and English UI**, switch in the header and sidebar. Croatian is the default; the choice is remembered.
 - **Scripted chat**, no API key needed. A real Claude API chatbot is a possible next step.
 - **No scraping of eSky or other booking sites**: against their terms, and it breaks during a live demo.
 - **Dubrovnik instead of Paklenica** (mentor feedback): easier to sell, and RIT has a Dubrovnik campus.

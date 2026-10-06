@@ -43,7 +43,7 @@ export const useVita = create<State>()(
       reset: () => set({ profile: {}, intakeDone: false, transportChoice: undefined, clinicChoice: undefined }),
     }),
     {
-      name: "vitanatura-demo-v2",
+      name: "vitanatura-demo-v3",
       storage: createJSONStorage(() => {
         try {
           return localStorage;
@@ -75,4 +75,19 @@ export const demoProfile: Profile = {
   medication: "Levothyroxine 75 mcg",
   destination: "Surgery in Dubrovnik, then home to Vienna",
   goal: "Surgery and recovery in Croatia, flight home when cleared",
+};
+
+export const demoProfileHr: Profile = {
+  situation: "Poskliznula se na stepenicama gradskih zidina, desni gležanj natečen, ne može stati na nogu",
+  location: "Stari grad Dubrovnik",
+  companion: "Suprug, taksi od Vrata od Pila",
+  injury: "Prijelom desnog gležnja, imobiliziran u Općoj bolnici Dubrovnik. Operacija preporučena u nekoliko dana",
+  weightBearing: "Bez opterećenja desne noge",
+  stairs: "Ne može svladati stepenice",
+  mobilityCode: "WCHS",
+  conditions: "Hipotireoza",
+  allergies: "Penicilin",
+  medication: "Levotiroksin 75 mcg",
+  destination: "Operacija u Dubrovniku, zatim kući u Beč",
+  goal: "Operacija i oporavak u Hrvatskoj, let kući kad liječnik odobri",
 };

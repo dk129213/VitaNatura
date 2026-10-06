@@ -129,8 +129,8 @@ export const intakeScript: Script = {
     id: "done",
     bot: [
       "Thank you, Marta. Your profile is ready, and every part of the trip will use it.",
-      "Your mobility code for airlines is WCHS: you can move a short distance with help, but not steps. Your hotel is inside the Old Town with steps everywhere, so I'm looking for a step-free place in Lapad.",
-      "Your plan covers the surgery, the moves, recovery, rehabilitation by the sea and the flight home.",
+      "Your mobility code for airlines is WCHS: you can move a short distance with help, but not steps. Your partner hotel in Lapad keeps an adapted ground-floor room free for cases like this, so you and Thomas can stay where you are.",
+      "Your plan covers the surgery, the moves, recovery, rehabilitation by the sea and the flight home. The rest of your active week (Ston, the Neretva canoe safari) is saved for when you come back.",
     ],
     replies: [],
     end: { label: "See my plan", href: "/journey" },
