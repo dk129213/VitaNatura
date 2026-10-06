@@ -1,33 +1,22 @@
 // Refreshes src/data/osm-facilities.json with real places from OpenStreetMap
-// and drive times from Pile Gate (Dubrovnik) via the public OSRM router.
+// around the Neretva delta (where the photo safari runs), plus the hospitals in Dubrovnik,
+// and drive times from the Opuzen boat jetty via the public OSRM router.
 //
 // Run from web/:  node scripts/fetch-facilities.mjs
 // Needs Node 18+ (built-in fetch). Be gentle with the free APIs: run it rarely.
 
 import { writeFileSync } from "node:fs";
 
-const UA = { "User-Agent": "VitaNatura365-hackathon-demo/0.1" };
-const PILE_GATE = [18.1058, 42.6416]; // lon, lat
-const RADIUS_M = 15000;
-
-// Kalos rehab hospital in Vela Luka is outside the radius, so it is added by hand (OSM way 1266792453).
-const KALOS = {
-  id: "w1266792453",
-  name: "Specijalna bolnica za medicinsku rehabilitaciju Kalos",
-  type: "hospital",
-  lat: 42.9682,
-  lon: 16.7129,
-  emergency: false,
-  hours: null,
-  phone: null,
-  wheelchair: null,
-  city: "Vela Luka",
-  street: "Ulica 3 3",
-  region: "korcula",
-};
+const UA = { "User-Agent": "VitaNatura365-hackathon-demo/0.2" };
+const OPUZEN_JETTY = [17.5636, 43.0141]; // lon, lat: lađa jetty on the Neretva in Opuzen
+const NERETVA = { lat: 43.02, lon: 17.55, radius: 20000 };
+const DUBROVNIK = { lat: 42.641, lon: 18.108, radius: 15000 };
 
 const query = `[out:json][timeout:60];
-(nwr["amenity"~"^(hospital|clinic|pharmacy|doctors|dentist)$"](around:${RADIUS_M},42.6410,18.1080););
+(
+  nwr["amenity"~"^(hospital|clinic|pharmacy|doctors)$"](around:${NERETVA.radius},${NERETVA.lat},${NERETVA.lon});
+  nwr["amenity"="hospital"](around:${DUBROVNIK.radius},${DUBROVNIK.lat},${DUBROVNIK.lon});
+);
 out center tags;`;
 
 // Overpass answers with an XML error page when it is busy, so retry a few times.
@@ -66,11 +55,16 @@ const places = osm.elements
       wheelchair: t.wheelchair ?? null,
       city: t["addr:city"] ?? null,
       street: t["addr:street"] ? `${t["addr:street"]} ${t["addr:housenumber"] ?? ""}`.trim() : null,
-      region: "dubrovnik",
+      region: lat < 42.8 ? "dubrovnik" : "neretva",
     };
   });
 
-const coords = [PILE_GATE, ...places.map((p) => [p.lon, p.lat])].map((c) => c.join(",")).join(";");
+// The 20 km circle reaches into Bosnia and Herzegovina (Čapljina, Neum, Ljubuški).
+// Keep only Croatian places: north of 43.09 and the Neum corridor are across the border.
+const inCroatia = (p) => p.lat <= 43.09 && !(p.lat < 42.95 && p.lon > 17.58 && p.lat > 42.88) && p.name !== "Apoteka";
+places.splice(0, places.length, ...places.filter(inCroatia));
+
+const coords = [OPUZEN_JETTY, ...places.map((p) => [p.lon, p.lat])].map((c) => c.join(",")).join(";");
 const table = await fetch(
   `https://router.project-osrm.org/table/v1/driving/${coords}?sources=0&annotations=duration,distance`,
   { headers: UA },
@@ -85,9 +79,9 @@ places.forEach((p, i) => {
 const out = {
   source: "OpenStreetMap contributors (ODbL), fetched via Overpass API",
   fetchedAt: new Date().toISOString().slice(0, 10),
-  driveTimesFrom: { place: "Pile Gate, Dubrovnik", source: "OSRM (router.project-osrm.org), OpenStreetMap road data" },
-  facilities: [...places, KALOS],
+  driveTimesFrom: { place: "Lađa jetty, Opuzen", source: "OSRM (router.project-osrm.org), OpenStreetMap road data" },
+  facilities: places.sort((a, b) => a.driveMin - b.driveMin),
 };
 
 writeFileSync(new URL("../src/data/osm-facilities.json", import.meta.url), JSON.stringify(out, null, 1));
-console.log(`Saved ${places.length} places around Dubrovnik (+ Kalos).`);
+console.log(`Saved ${places.length} places (Neretva delta + Dubrovnik hospitals).`);

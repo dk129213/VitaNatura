@@ -6,7 +6,6 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { PaperPlaneRight, ArrowRight } from "@phosphor-icons/react";
 import type { Script, ChatNode } from "@/lib/scripts";
 import { useVita } from "@/lib/store";
-import { useT } from "@/lib/i18n";
 
 type Msg = { from: "bot" | "user"; text: string; key: string };
 
@@ -24,7 +23,6 @@ export function ChatPanel({
   className?: string;
 }) {
   const patch = useVita((s) => s.patch);
-  const t = useT();
   const reduce = useReducedMotion();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [node, setNode] = useState<ChatNode | null>(null);
@@ -85,14 +83,14 @@ export function ChatPanel({
 
   return (
     <section
-      aria-label={t(`Conversation with ${title}`, `Razgovor: ${title}`)}
+      aria-label={`Conversation with ${title}`}
       className={`flex flex-col rounded-2xl border border-line bg-surface shadow-soft overflow-hidden ${className}`}
     >
       <header className="flex items-center gap-3 border-b border-line px-5 py-3.5">
         <span className="grid size-9 place-items-center rounded-full bg-accent text-accent-ink font-semibold">V</span>
         <div className="leading-tight">
           <p className="font-medium">{title}</p>
-          <p className="text-sm text-ink-3">{t("Scripted demo, no live AI", "Skriptirani demo, bez stvarnog AI-ja")}</p>
+          <p className="text-sm text-ink-3">Scripted demo, no live AI</p>
         </div>
       </header>
 
@@ -119,7 +117,7 @@ export function ChatPanel({
           ))}
         </AnimatePresence>
         {typing && (
-          <div className="flex" aria-label={t("Vita is typing", "Vita piše")}>
+          <div className="flex" aria-label="Vita is typing">
             <span className="flex gap-1 rounded-2xl bg-surface-2 px-4 py-3.5">
               {[0, 1, 2].map((i) => (
                 <span
@@ -163,20 +161,20 @@ export function ChatPanel({
         )}
         <form onSubmit={submitFree} className="flex items-center gap-2">
           <label htmlFor={`chat-${title}`} className="sr-only">
-            {t("Type a message", "Napišite poruku")}
+            Type a message
           </label>
           <input
             id={`chat-${title}`}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             disabled={!node?.freeTextNext}
-            placeholder={node?.freeTextNext ? t("Type in any language", "Pišite na bilo kojem jeziku") : t("Pick an answer above", "Odaberite odgovor iznad")}
+            placeholder={node?.freeTextNext ? "Type in any language" : "Pick an answer above"}
             className="flex-1 rounded-xl border border-line bg-bg px-4 py-2.5 placeholder:text-ink-3 disabled:opacity-60"
           />
           <button
             type="submit"
             disabled={!node?.freeTextNext}
-            aria-label={t("Send", "Pošalji")}
+            aria-label="Send"
             className="grid size-11 place-items-center rounded-full bg-accent text-accent-ink disabled:opacity-40"
           >
             <PaperPlaneRight weight="fill" />

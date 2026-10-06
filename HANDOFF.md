@@ -3,51 +3,27 @@
 Everything you need to pick this project up on any computer, alone or with Claude.
 Last updated: 6 October 2026.
 
-> **6 Oct: new direction.** The theme is now *year-round tourism*: active and health tourism in
-> Dubrovnik-Neretva County for empty nesters, with one partner hotel as the base. See `CONCEPT-365.md`
-> (Croatian) for the concept and how it answers the hackathon brief. The site is now bilingual (HR/EN).
-
 ## 1. What this is
 
-**VitaNatura 365** is a hackathon project (Tourism 365) about health tourism and recovery in nature.
-Slogans: **"You travel. We care."** and **"Health in your pocket."**
+**VitaNatura 365** is our Tourism 365 hackathon project. Theme: year-round tourism.
+Slogan: **You travel. We care.** ("Vi putujete, mi brinemo.")
 
-One user profile connects six modules:
+Ten small-group tours in the countryside around Dubrovnik (the Neretva delta, Ston, Konavle, Mljet,
+the Elaphiti islands, Trsteno), from October to May, open to children, with realistic prices. Each tour
+comes with a concrete change on the ground (photo hides, canoe launch points, a birdwatching route,
+farm seating...). One partner hotel in Lapad is the base. "We care" is the safety net: if someone gets
+hurt far from the city, our guide and the Vita assistant find help and rearrange the trip.
 
-| # | Module (app page) | What it does in the demo |
-|---|---|---|
-| 6 | Help on the road (`/help`) | 112/194 buttons, real nearby hospitals and pharmacies on a map, triage chat, health passport in Croatian, who pays (EHIC) |
-| 1 | Clinic and stay (`/clinic`) | Where to have surgery (Dubrovnik vs Zagreb vs home), step-free apartment in Lapad |
-| 2 | Accessible transport (`/transport`) | Every transfer checked for steps, flight home with WCHS assistance, MEDIF, reminders |
-| 3 | Recovery (`/recovery`) | Heart-rate chart, daily check-in chat, doctor summary, activities unlocked by day |
-| 4 | Rehab and nature (`/wellness`) | 14 days at Kalos (Vela Luka), live weather and air quality, flat paths, other spas |
-| 5 | Crowd-free trips (`/explore`) | Mandarin, grape and olive harvests, family farms, Green Sea Safari, cruise-day tip |
-
-Plus `/start` (profile chat that builds the profile) and `/journey` (Marta's whole plan as a timeline).
-
-New "Destination 365" pages (what changes on the ground, the main part of the pitch now):
-
-| Page | What it shows |
-|---|---|
-| `/calendar` | Calendar 365: St. Blaise, Ston oysters, Moreška, harvests, lađa, Konavle folklore, stretched into seasons |
-| `/active` | Photo safari, canoe safari, birdwatching, harvests, Ston walls, lađa rowing, sample 7-day week |
-| `/health` | Salt room in Ston, heated hotel pool, check-ups, smartwatch plan, safety net (links to Marta) |
-| `/hotel` | The partner hotel contract and its phases |
-| `/community` | Empty nesters, local jobs, stakeholders, ecology, the brief point by point |
-
-**Demo story:** Marta, 54, a teacher from Vienna, slips on the Dubrovnik city walls on 4 October.
-Carry chair to Pile Gate, Opća bolnica Dubrovnik, surgery on 6 October (EHIC), step-free apartment in
-Lapad, monitored recovery, rehab at Kalos on Korčula (2 to 15 Nov), flight home 17 Nov.
+The concept and how it answers the brief and the jury criteria: **`CONCEPT-365.md`**.
 
 ## 2. Links
 
 | What | Where |
 |---|---|
-| Live app | https://dk129213.github.io/VitaNatura/ |
+| Live site | https://dk129213.github.io/VitaNatura/ |
 | Code | https://github.com/dk129213/VitaNatura |
 | Deploy runs | https://github.com/dk129213/VitaNatura/actions |
 | Pages settings | https://github.com/dk129213/VitaNatura/settings/pages (Source must be **GitHub Actions**) |
-| Original concept doc | `VitaNatura365.docx` (Croatian, kept outside the repo) |
 
 ## 3. Run it on a new computer
 
@@ -62,110 +38,56 @@ npm run dev
 
 Open http://localhost:3000. Every push to `main` redeploys the live site in about 2 minutes.
 
-## 4. Where things are
+## 4. The site
+
+| Page | What it shows |
+|---|---|
+| `/` | Slogan, then all 10 tours with prices right away, the contents, what we build, "We care" |
+| `/tours` | Price table with month and type filters, every tour in detail, week package, transfers, price sources |
+| `/calendar` | Calendar 365: traditions and harvests stretched into seasons |
+| `/hotel` | The partner hotel contract and its phases |
+| `/community` | Audience, local jobs, stakeholders, nature |
+| `/plan` | Start-up costs, funding, revenue, targets, marketing plan |
+| `/help` | We care: Marta's first hour, real health places near the Neretva jetty, triage chat, health passport |
+| `/start` | Marta's chat (scripted demo) |
+| `/journey` | Marta's week, before and after the fall |
+
+## 5. Where things are
 
 ```
 VitaNatura/
-├─ HANDOFF.md                 this file
-├─ README.md                  short project intro
+├─ HANDOFF.md, CONCEPT-365.md, README.md
 ├─ .github/workflows/         deploy-pages.yml: builds web/ and publishes to GitHub Pages
-├─ .claude/launch.json        lets Claude start the dev server in its preview browser
-├─ presentation/              pitch deck VitaNatura365-pitch.pptx + build-deck.js (see its README)
-├─ video/                     promo video VitaNatura365.mp4 + Remotion project (see its README)
-└─ web/                       the app (Next.js 16, Tailwind 4, Motion, Leaflet, zustand)
-   ├─ scripts/fetch-facilities.mjs   refreshes real hospitals + drive times
+├─ presentation/              VitaNatura365-pitch.pptx + build-deck.js (see its README)
+├─ video/                     VitaNatura365.mp4 + Remotion project (see its README)
+└─ web/                       the site (Next.js 16, Tailwind 4, Motion, Leaflet, zustand)
+   ├─ scripts/fetch-facilities.mjs   refreshes real health places around the Neretva delta
    ├─ public/img/                    photos (Wikimedia Commons, credited in the footer)
    └─ src/
       ├─ app/page.tsx                landing page
-      ├─ app/(app)/<module>/page.tsx one folder per module page
-      ├─ components/                 AppShell (sidebar), ChatPanel, MapView, LineChart, LiveConditions
-      ├─ data/scenario.ts            Marta's story data in English
-      ├─ data/scenario.hr.ts         the same in Croatian (same shape, checked at build time)
-      ├─ data/destination.ts         Destination 365 content, both languages in one file
-      ├─ lib/i18n.ts                 HR/EN switch: useT() gives t("English", "Hrvatski")
-      ├─ data/osm-facilities.json    real places from OpenStreetMap
+      ├─ app/(app)/<page>/page.tsx   one folder per page
+      ├─ data/tours.ts               THE TOURS AND PRICES: edit here
+      ├─ data/destination.ts         changes on the ground, calendar, hotel, partners, funding, marketing
+      ├─ data/scenario.ts            Marta's story
       ├─ data/credits.ts             photo credits (required by the licences)
-      ├─ lib/scripts.ts              the scripted chat conversations (English)
-      └─ lib/scripts.hr.ts           the same in Croatian
+      └─ lib/scripts.ts              the scripted chat conversations
 ```
 
-**Most edits happen in two files:** `web/src/data/scenario.ts` (story, prices, farms, trails) and
-`web/src/lib/scripts.ts` (what the chatbots say).
+## 6. Real data vs sample data
 
-## 5. Real data vs sample data
-
-Be ready to answer this in the pitch.
-
-| Real | Sample (labelled in the app) |
+| Real | Ours / sample |
 |---|---|
-| Hospitals, clinics, pharmacies, addresses (OpenStreetMap) | Match scores, prices, fares, flight times |
-| Drive times from Pile Gate (OSRM) | Apartment in Lapad, partner taxis and vans |
-| Live weather, air quality, pollen (Open-Meteo) | Family farms (OPG Matić, Bralić, Vukelić) |
-| EU passenger rights rules (1107/2006 air, 181/2011 coach) | Recovery data, doctor (Dr. Horvat) |
-| Kalos rehab hospital, Green Sea Safari trip details | Appointment slots, trail crowd notes |
+| Health places near Opuzen and Dubrovnik (OpenStreetMap), drive times (OSRM) | Our tour prices (checked against real ones, see `/tours`) |
+| Ticket prices used to set ours: Ston walls, salt works, Mljet NP, Trsteno, ferries | Partner hotel, farms, outfitters |
+| Live weather in the Neretva delta (Open-Meteo) | Start-up costs, funding split, guest targets |
+| Traditions and their dates (St. Blaise, Ston Oyster Days, Moreška, Maraton lađa) | Marta's story, the chat (scripted, no live AI) |
 
-The chatbots are **scripted** (no live AI), so the demo works offline and the same way every time.
+## 7. Pitch (6 minutes, timer)
 
-Refresh the real places (rarely, free APIs):
+The deck has 11 slides, about 30 seconds each, with speaker notes. Before presenting: open the live
+site once, click **Restart demo** in the sidebar, keep `npm run dev` running locally in case the Wi-Fi is bad.
 
-```bash
-cd web
-node scripts/fetch-facilities.mjs
-```
-
-## 6. Decisions so far (and why)
-
-- **Croatian and English UI**, switch in the header and sidebar. Croatian is the default; the choice is remembered.
-- **Scripted chat**, no API key needed. A real Claude API chatbot is a possible next step.
-- **No scraping of eSky or other booking sites**: against their terms, and it breaks during a live demo.
-- **Dubrovnik instead of Paklenica** (mentor feedback): easier to sell, and RIT has a Dubrovnik campus.
-- **Marta is a foreign tourist** (EHIC) to show the app is for *any* tourist, not only patients.
-- **Photos only from Wikimedia Commons** with credits. Green Sea Safari's own photos are not used
-  without their permission.
-
-## 7. Mentor feedback (4 Oct) and status
-
-| Feedback | Status |
-|---|---|
-| Set it in Dubrovnik, not Paklenica | Done |
-| App walkthrough is the centre of the pitch, a few slides for intro and end | Deck in `presentation/` is built that way |
-| Slogans "Vi putujete, mi brinemo" and "Zdravlje u vašem džepu/mobu" | Done ("You travel. We care.", "Health in your pocket") |
-| For every tourist: something goes wrong, or a planned health trip | Done, landing page section |
-| Photos: Dubrovnik, buses, planes, mandarins, grapes, olives, spas, health resorts | Done |
-| Add Green Sea Safari | Done, Crowd-free trips page |
-
-## 8. Pitch walkthrough (about 4 minutes of the demo)
-
-1. **Landing** (`/`): slogan, "For every tourist" section. 20 s.
-2. **Profile chat** (`/start`): click the answers. The profile fills on the right, WCHS appears. 60 s.
-   Shortcut: "Fill for demo".
-3. **My plan** (`/journey`): the whole trip on one screen. 20 s.
-4. **Help on the road** (`/help`): real map, tourist clinic in the Old Town, Croatian passport toggle. 40 s.
-5. **Transport** (`/transport`): flight home compared, assistance request filled in. 30 s.
-6. **Recovery** (`/recovery`): click day 6 (yellow), show the doctor summary. 30 s.
-7. **Rehab** (`/wellness`): live weather at Vela Luka, paths unlocked by recovery stage. 20 s.
-8. **Crowd-free trips** (`/explore`): harvests and Green Sea Safari. 20 s.
-
-Before presenting: open the live link once (warms the cache), click **Restart demo** in the sidebar,
-and keep a local copy running (`npm run dev`) in case the venue Wi-Fi is bad.
-
-### Rebuild the deck or the video
-
-```bash
-cd presentation && npm install && node build-deck.js      # VitaNatura365-pitch.pptx
-cd video && npm install && npm run render                  # out/VitaNatura365.mp4
-```
-
-## 9. Ideas for next steps
-
-- Real Claude API chatbot for intake and triage (needs an API key and a small backend).
-- Croatian and German UI.
-- Real flight data through an official API (for example Duffel or Kiwi Tequila, with a key).
-- Partner list: adapted taxis in Dubrovnik, Kalos, Green Sea Safari, local OPGs.
-- Clinic dashboard for doctors (the recovery summaries in one place).
-- Business model: commission from clinics and partners, B2B for insurers and hotels.
-
-## 10. Gotchas (things that already bit us)
+## 8. Gotchas (things that already bit us)
 
 - **GitHub Pages needs Source = GitHub Actions.** On "Deploy from a branch" it shows the README instead of the app.
 - The app is served from `/VitaNatura/`. `web/next.config.ts` adds that path in the build, and
@@ -173,21 +95,14 @@ cd video && npm install && npm run render                  # out/VitaNatura365.m
 - URLs end with a slash (`/help/`). The sidebar strips it before comparing.
 - In Git Bash on Windows, `PAGES_BASE_PATH=/VitaNatura` gets rewritten to a Windows path. Prefix with
   `MSYS_NO_PATHCONV=1` when testing the Pages build locally.
-- Overpass (OpenStreetMap API) is sometimes busy; the fetch script retries.
+- Overpass (OpenStreetMap API) is sometimes busy; the fetch script retries. It also drops places across
+  the border in Bosnia and Herzegovina.
+- Wikimedia Commons rate-limits fast requests: wait a minute between searches.
 - Old demo data can stick in the browser: click **Restart demo**.
 
-## 11. Continuing with Claude Code
+## 9. Continuing with Claude Code
 
 Open the `VitaNatura` folder in Claude Code and say: *"Read HANDOFF.md and continue."*
 
-Plugins used for this project (install once per computer, in a terminal running `claude`):
-
-```
-/plugin marketplace add obra/superpowers-marketplace
-/plugin install superpowers@superpowers-marketplace
-/plugin marketplace add leonxlnx/taste-skill
-/plugin install taste-skill@taste-skill
-```
-
-Design rules followed in the app (from taste-skill): one accent colour (pine green), no em dashes in
-any text, light and dark mode, real photos only, every invented number labelled as sample.
+Design rules: one accent colour (pine green), no em dashes in any text, light and dark mode, real photos
+only, every invented number labelled.

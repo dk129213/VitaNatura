@@ -1,93 +1,66 @@
-# VitaNatura 365: koncept (tema: cjelogodišnji turizam)
+# VitaNatura 365: concept
 
-Ažurirano 6. listopada 2026. Zamjenjuje prethodnu verziju ovog dokumenta.
+Updated 6 October 2026. Theme: **year-round tourism**. Slogan: **You travel. We care.** ("Vi putujete, mi brinemo.")
 
-**Ideja u jednoj rečenici:** Dubrovačko-neretvansku županiju prilagođavamo za **aktivni i zdravstveni
-turizam izvan sezone**, za goste kojima su djeca otišla od kuće (empty nesters), s jednim partnerskim
-hotelom kao bazom i lokalnim ljudima kao vodičima i domaćinima.
+**In one sentence:** ten small-group tours in the countryside around Dubrovnik (not the Old Town),
+from October to May, open to children, with concrete changes on the ground that make them possible,
+one partner hotel as the base, and a safety net if someone gets hurt far from the city.
 
-> Pravilo iz zadatka: *ne marketing, nego konkretna poboljšanja destinacije.* Zato je na stranici
-> svaka aktivnost opisana zajedno s onim **što se mijenja na terenu** (oznaka "Novo na terenu").
-> Aplikacija (Vita, Martina priča) je samo alat koji drži sve na okupu, nije proizvod.
+## The brief, point by point (in order of importance)
 
-## 1. Dva stupa
+| Brief | Our answer | Site page | Slide |
+|---|---|---|---|
+| **Most important: concrete enhancements, not marketing** | Photo hides, canoe launch points, birdwatching route, benches and winter hours on the Ston walls, farm seating, winter folklore show, island walking loops, local guides certified with first aid | `/` and `/tours` | 4 |
+| Need for the destination and the local community | Full 3 months, empty 6; locals lose income in winter | `/` | 2 |
+| Audience, all year | Anyone travelling outside summer: families in school holidays, couples whose kids have left home, grandparents with grandchildren | `/community` | 6 |
+| Experience | 10 tours with prices, a 7-night week (€790 adult, €350 child) | `/tours` | 3, 6 |
+| Realistic | Existing places, prices checked against similar tours, one hotel to start | `/tours`, `/hotel` | 9 |
+| Ecological influence | Groups of 8 in the delta, no new buildings, shared minibus, island clean-ups | `/community` | 8 |
+| Inclusion, working, volunteering | Boatmen, farms, island families and youth as guides; guests join clean-ups | `/community` | 8 |
+| Stakeholders | Everyone with an activity on the route | `/community` | 8 |
+| Financing and marketing | €114,000 start, 45% grants, break-even year 2; summer guests come back, guests' photos, marketplaces, fairs | `/plan` | 9 |
 
-**Aktivno**
-- Foto safari lađom u delti Neretve (skrovišta za fotografiranje na 3 vidikovca, tečaj za lađare kao vodiče)
-- Kanu safari po kanalima Neretve (2 mjesta za spuštanje kanua s rampom)
-- Promatranje ptica, najbolje od listopada do travnja (označena staza, ploče na 4 jezika, dalekozori u hotelu)
-- Berbe: grožđe, mandarine, masline, zimska rezidba (hladovina, klupe i staze bez stepenica na OPG-ovima)
-- Šetnja Stonskim zidinama (klupe i voda, zimsko radno vrijeme)
-- Veslanje lađom s ekipama Maratona lađa
+## Jury criteria
 
-**Zdravlje**
-- Haloterapija u Stonu: nova slana soba uz solanu (za dobrobit, bez medicinskih tvrdnji)
-- Grijani hotelski bazen u Dubrovniku, otvoren od listopada do svibnja, karte i za lokalne
-- Preventivni pregled 2. dan u partnerskoj poliklinici (gosti su uglavnom osigurani)
-- Plan s pametnim satom: san i puls biraju verziju dana (kanu ili bazen)
-- Sigurnosna mreža ako nešto pođe po zlu: to je Martina priča (bolnica, prilagođena soba, Kalos, let kući)
+| Criterion | How we meet it |
+|---|---|
+| Content | 10 priced tours, a week package, Calendar 365 |
+| Innovation | Photo safari by lađa, guides with first aid, help app for rural areas |
+| Feasibility | Existing places and partners, researched prices, one hotel first |
+| Sustainability | Small groups, no new buildings, local income |
+| Diversity | Nature, harvests, heritage, islands |
+| Uniqueness | The countryside nobody shows, with a safety net |
+| Attractivity | Mandarins, oysters, herons, kids welcome |
+| Adaptability | Tours swap by season, weather or an injury |
 
-## 2. Ciljana skupina: empty nesters
+## The tours (prices per person)
 
-50 do 65 godina, djeca otišla od kuće, imaju vremena i novca, osigurani, nisu vezani uz školske
-praznike, ostaju 7 do 14 noćenja. Dolaze iz Austrije, Njemačke, Velike Britanije i Skandinavije.
+| Tour | Where | When | Adult | Child |
+|---|---|---|---|---|
+| Neretva photo safari by lađa | Opuzen | Oct to Apr | €45 | €25 |
+| Canoe safari | Opuzen | Mar to May, Oct to Nov | €35 | €20 |
+| Birdwatching and Ornithological Collection | Metković | Oct to Apr | €30 | €15 |
+| Mandarin harvest and lunch | Neretva valley | Oct to Dec | €39 | €19 |
+| Ston walls, salt works and oyster boat | Ston | Feb to May, Oct to Nov | €65 | €30 |
+| Olive picking and oil mill | Pelješac | Oct to Dec | €49 | €22 |
+| Konavle: Ljuta mills, folklore, silk | Čilipi | Nov to Mar | €45 | €22 |
+| Mljet National Park by bike | Mljet | Oct to Nov, Mar to May | €79 | €39 |
+| Car-free islands walk | Koločep, Lopud | Oct to Apr | €39 | €19 |
+| Trsteno Arboretum | Trsteno | All year | €25 | €12 |
 
-## 3. Kalendar 365: tradicije produžene u sezone
+How each price was set, with sources: `web/src/data/tours.ts` and the bottom of the Tours page.
 
-| Tradicija | Danas | Produženo |
-|---|---|---|
-| Festa sv. Vlaha, 3. veljače (UNESCO) | Nekoliko dana | Tjedan sv. Vlaha: šetnje, izložbe relikvija i nošnji, tradicionalna hrana |
-| Dani malostonskih kamenica (oko 19. ožujka) | Nekoliko dana | Put kamenica od veljače do travnja: uzgajališta, kušanja, zidine, slana soba |
-| Moreška (29. srpnja) i Kumpanija (Blato, Pupnat) | Par večeri tjedno ljeti | Izvedbe u proljeće i jesen, otvorene probe, izložba |
-| Berba mandarina, dolina Neretve | Fešta od par dana | Branje, boravak na OPG-u i lađe kroz cijelu berbu (lis. - stu.) |
-| Maraton lađa (kolovoz) | Jedan dan u gužvi | Veslanje za goste, treninzi, jesenski vikend lađa |
-| Konavoski folklor, Čilipi | Nedjeljom u sezoni | Mjesečni zimski nastupi, radionice veza i svile |
-| Pelješka vina (Plavac mali, Dingač, Postup) | Oko berbe | Zimski i proljetni kalendar otvorenih podruma |
+## We care (Marta)
 
-## 4. Partnerski hotel
+Marta (54), Thomas and granddaughter Lena (9) from Vienna are on the Neretva and Ston week. On Sunday
+4 October Marta slips on the wet jetty at Opuzen during the photo safari. There is no street address
+and the local clinic is closed. The guide gives first aid, Vita picks the hospital in Dubrovnik and
+sends her GPS and health card in Croatian, Lena stays with the group. It is a sprain: the rest of the
+week is rearranged (step-free room, seated tours), not cancelled.
 
-Ugovor s jednim hotelom u Lapadu: zajamčene sobe od listopada do svibnja, grijani bazen, 2 prilagođene
-sobe u prizemlju uvijek slobodne. **Mi:** veća zarada po paketu i siguran smještaj za klijente.
-**Hotel:** gosti u mjesecima kad se zatvarao, osoblje cijele godine, polagano navikavanje na rad
-izvan sezone. Faze: zima 2026./27. 10 soba; 2027./28. 25 soba; 2028.+ drugi hotel (Ston ili Korčula).
+## Check before the pitch
 
-## 5. Lokalna zajednica, dionici, priroda
-
-- **Posao:** vodiči foto safarija i ptica (lađari, mladi iz doline), vodiči kanua, domaćini na OPG-ovima,
-  fizioterapeuti i osoblje bazena zimi, osoblje slane sobe u Stonu, folklorne skupine i svilarice.
-- **Korist za stanovnike:** karte za bazen, javna staza za ptice, klupe na zidinama, produžene fešte.
-- **Dionici:** svatko tko ima aktivnost na itineraru (hotel, OPG-ovi, lađari, solana, uzgajivači kamenica,
-  poliklinika i bolnica, Kalos, folklorne skupine, veslački klubovi, turističke zajednice, osiguravatelji).
-- **Priroda:** male grupe i stalne rute u delti, bez nove gradnje, pokrivači i solarno grijanje bazena kao
-  cilj ugovora, zajednički minibus, hrana s OPG-ova, isti broj gostiju raspoređen na 12 mjeseci.
-- **Marketing (namjerno malo):** preporuke osiguravatelja i agencija za putnike 50+, gosti partnerskog hotela.
-
-## 6. Zadatak hackathona, točku po točku
-
-| Zadatak traži | Odgovor | Na stranici |
-|---|---|---|
-| Potreba destinacije i lokalne zajednice | Prazni hoteli i bez posla od listopada do svibnja, ljetne gužve | Naslovnica |
-| Za koga, cijele godine | Empty nesters | Naslovnica, Zajednica |
-| Realno | Postojeći hotel, OPG-ovi, lađe, tradicije; prvo jedan hotel | Partnerski hotel |
-| Utjecaj na okoliš | Vidi točku 5 | Zajednica |
-| Uključivanje lokalnog stanovništva | Lokalni vodiči, domaćini, osoblje; usluge i za stanovnike | Zajednica |
-| Rad i volontiranje | Novi poslovi; gosti u čišćenju mora i berbama | Zajednica, Izleti bez gužvi |
-| Utjecaj na lokalnu zajednicu | Prihod i posao zimi, usluge otvorene i njima | Zajednica |
-| Marketing | Namjerno malo, B2B preporuke | Zajednica |
-| Dionici | Svatko s aktivnošću na itineraru | Zajednica |
-| Iskustvo | Aktivni i zdravstveni tjedan sa sigurnosnom mrežom | Aktivni turizam, Martina priča |
-| Najvažnije: konkretna poboljšanja | Skrovišta, mjesta za kanue, slana soba, zimski bazen, klupe, produžene fešte | Svaka stranica, oznaka "Novo na terenu" |
-
-## 7. Martina priča (demo)
-
-Marta (54) i Thomas iz Beča, djeca otišla od kuće, rezervirali su aktivni i zdravstveni tjedan
-početkom listopada. 1. - 3. dan: hotel, pregled, foto safari i mandarine. 4. dan padne na dubrovačkim
-zidinama. Dalje postojeći demo: bolnica, prilagođena soba u partnerskom hotelu, oporavak uz pametni
-sat, Kalos, let kući. U ožujku 2027. vraća se dovršiti tjedan: Ston, kamenice, kanu safari.
-
-## 8. Što još provjeriti prije pitcha
-
-- Postoji li već haloterapija u Stonu (mi je predlažemo kao novu).
-- Točni datumi fešta za 2027. i radno vrijeme Stonskih zidina zimi.
-- Prezentacija (`presentation/`) i video (`video/`) još pričaju staru priču i treba ih uskladiti.
-- Fotografije za Ston, Morešku, sv. Vlaha i kamenice (Wikimedia Commons, s autorima u podnožju).
+- Grant calls open in 2027 (Ministry of Tourism and Sport, EU funds, LAG).
+- Whether Ston walls can open in winter, and the 2027 dates of Ston Oyster Days and St. Blaise.
+- The start-up costs are our estimates.
+- Partners (hotel, farms, outfitters) are samples until contracts are signed.

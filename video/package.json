@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render VitaNatura out/VitaNatura365.mp4"
+    "render": "remotion render VitaNatura VitaNatura365.mp4 --crf=28"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
