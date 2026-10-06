@@ -1,11 +1,16 @@
 # Pitch deck
 
-`VitaNatura365-pitch.pptx`: 11 slides for the 6-minute pitch, about 30 seconds each.
+`VitaNatura365-pitch.pptx`: 12 slides for the 6-minute pitch, about 30 seconds each.
 Speaker notes with timings are on every slide (View > Notes in PowerPoint).
 
-Flow, ordered by the brief: title, the need, the tours, **what we build on the ground**, Calendar 365,
-who it is for, We care (Marta), locals and nature, funding and marketing, the jury's criteria, closing.
-The QR codes and the "→" links on slides open the live site, so the jury can follow on their phones.
+The deck tells the destination story, not a travel agency's: we change the region for year-round
+tourism. Flow: title, the need, our idea in three ways, St. Blaise Week, the Ston oyster season,
+new activities in the Neretva valley and what we build, the local community, target audience
+(empty nesters first), marketing through influencers, the partner hotel, the jury's criteria, closing.
+No price list. The QR codes open the live site.
+
+Photos come from `web/public/img` and `presentation/img` (deck-only photos), credited on the last slide.
+Icons from Phosphor (same as the app).
 
 To change the text or design, edit `build-deck.js` and rebuild:
 
@@ -15,4 +20,3 @@ npm install
 node build-deck.js
 ```
 
-Photos come from `web/public/img`, icons from Phosphor (same as the app).

@@ -8,17 +8,25 @@ one partner hotel as the base, and a safety net if someone gets hurt far from th
 
 ## The brief, point by point (in order of importance)
 
-| Brief | Our answer | Site page | Slide |
-|---|---|---|---|
-| **Most important: concrete enhancements, not marketing** | Photo hides, canoe launch points, birdwatching route, benches and winter hours on the Ston walls, farm seating, winter folklore show, island walking loops, local guides certified with first aid | `/` and `/tours` | 4 |
-| Need for the destination and the local community | Full 3 months, empty 6; locals lose income in winter | `/` | 2 |
-| Audience, all year | Anyone travelling outside summer: families in school holidays, couples whose kids have left home, grandparents with grandchildren | `/community` | 6 |
-| Experience | 10 tours with prices, a 7-night week (€790 adult, €350 child) | `/tours` | 3, 6 |
-| Realistic | Existing places, prices checked against similar tours, one hotel to start | `/tours`, `/hotel` | 9 |
-| Ecological influence | Groups of 8 in the delta, no new buildings, shared minibus, island clean-ups | `/community` | 8 |
-| Inclusion, working, volunteering | Boatmen, farms, island families and youth as guides; guests join clean-ups | `/community` | 8 |
-| Stakeholders | Everyone with an activity on the route | `/community` | 8 |
-| Financing and marketing | €114,000 start, 45% grants, break-even year 2; summer guests come back, guests' photos, marketplaces, fairs | `/plan` | 9 |
+| Brief | Our answer | Site page |
+|---|---|---|
+| **Most important: concrete enhancements, not marketing** | Photo hides, canoe launch points, birdwatching route, benches and winter hours on the Ston walls, farm seating, winter folklore show, island walking loops, local guides certified with first aid | `/` and `/tours` |
+| Need for the destination and the local community | Full 3 months, empty 6; locals lose income in winter | `/` |
+| Audience, all year | Anyone travelling outside summer: families in school holidays, couples whose kids have left home, grandparents with grandchildren | `/community` |
+| Experience | 10 tours with prices, a 7-night week (€790 adult, €350 child) | `/tours` |
+| Realistic | Existing places, prices checked against similar tours, one hotel to start | `/tours`, `/hotel` |
+| Ecological influence | Groups of 8 in the delta, no new buildings, shared minibus, island clean-ups | `/community` |
+| Inclusion, working, volunteering | Boatmen, farms, island families and youth as guides; guests join clean-ups | `/community` |
+| Stakeholders | Everyone with an activity on the route | `/community` |
+| Financing and marketing | €114,000 start, 45% grants, break-even year 2; summer guests come back, guests' photos, marketplaces, fairs | `/plan` |
+
+## The pitch deck
+
+The deck tells the destination story (we are not a travel agency) and has no price list:
+the need, three ways we change the destination, St. Blaise Week (3 to 9 February, workshops after the
+feast), the Ston oyster season (February to April), the photo safari, birdwatching and harvests and what
+we build for them, jobs and income for locals, the audience (empty nesters first, families and nature
+lovers welcome), marketing through influencers, the partner hotel, the jury's criteria.
 
 ## Jury criteria
 
